@@ -2,6 +2,8 @@ package com.dario.smartecg;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,45 +12,54 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import com.dario.smartecg.knn.*;
 public class MainActivity extends Activity {
-    private String filename = "Dati.txt";
+    private static final int NEW_ACTIVITY_ON_TOP = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK;
 
-    public File path;
+private ImageButton goButton;
+    private EditText name;
 
-    private Knn knn;
-
-    double heartbeat[] = new double[5];
-
-    private Random r = new Random();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       try {
-           Knn KNN = new Knn(getAssets().open("Dati.txt"));
-           Toast.makeText(getApplicationContext(), "ciao", Toast.LENGTH_LONG).show();
+goButton=(ImageButton) findViewById(R.id.goButton);
+        name=(EditText)findViewById(R.id.name);
 
-           double heartbeat[] = {800.900000, 800.800000, 800.400000, 800.000000, 800.7};
+goButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent= new Intent(getApplicationContext(), HomeActivity.class);
+        intent.putExtra("name", name.getText());
 
-           if (KNN.prediction(heartbeat) == 0) {
-               Toast.makeText(getApplicationContext(), "No Fibrillation", Toast.LENGTH_LONG).show();
-           } else {
-               Toast.makeText(getApplicationContext(), "Fibrillation", Toast.LENGTH_LONG).show();
+        startActivity(intent.addFlags(NEW_ACTIVITY_ON_TOP));
+    }
+});
 
-           }
-       }catch (IOException e){
-           e.printStackTrace();
-       }
+
+
 
     }
 
+    @Override
+    public void onBackPressed() {
+    }
 
 
 }

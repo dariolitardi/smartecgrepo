@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">SmartECG</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="name">Your name</string>
+    <string name="age">Age</string>
+    <string name="weight">Body weight</string>
+    <string name="height">Height</string>
+    <string-array name="gender">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>
