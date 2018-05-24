@@ -1,7 +1,7 @@
 package com.dario.smartecg;
 
+import android.Manifest;
 import android.app.Activity;
-<<<<<<< HEAD
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,38 +19,26 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-=======
-import android.os.Bundle;
->>>>>>> 837250f231d5d15a55f74110728dc6e31532f1ce
 import android.widget.Toast;
 
-import com.dario.smartecg.knn.Knn;
-
+import java.io.File;
 import java.io.IOException;
-<<<<<<< HEAD
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-=======
->>>>>>> 837250f231d5d15a55f74110728dc6e31532f1ce
 
+import com.dario.smartecg.knn.*;
 public class MainActivity extends Activity {
-<<<<<<< HEAD
     private static final int NEW_ACTIVITY_ON_TOP = Intent.FLAG_ACTIVITY_SINGLE_TOP
             | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK;
 
 private ImageButton goButton;
     private EditText name;
-=======
-
-    private Knn KNN;
->>>>>>> 837250f231d5d15a55f74110728dc6e31532f1ce
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
 goButton=(ImageButton) findViewById(R.id.goButton);
         name=(EditText)findViewById(R.id.name);
 
@@ -75,25 +63,3 @@ goButton.setOnClickListener(new View.OnClickListener() {
 
 
 }
-=======
-        try {
-            if (KNN == null) {
-                KNN = new Knn(getAssets().open("Dati.txt"));
-            }
-
-            Toast.makeText(getApplicationContext(), "ciao", Toast.LENGTH_LONG).show();
-
-            double heartbeat[] = {800.900000, 800.800000, 800.400000, 800.000000, 800.7};
-
-            if (KNN.prediction(heartbeat) == 0) {
-                Toast.makeText(getApplicationContext(), "No Fibrillation", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "Fibrillation", Toast.LENGTH_LONG).show();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-}
->>>>>>> 837250f231d5d15a55f74110728dc6e31532f1ce
