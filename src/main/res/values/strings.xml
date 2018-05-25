@@ -10,4 +10,19 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+
+    <string name="unknown_characteristic">Unknown characteristic</string>
+    <string name="unknown_service">Unknown service</string>
+
+    <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
+    <string name="scan_devices">Scan</string>
+    <string name="stop_scanning">Stop</string>
+    <string name="scan_running">Scan running…</string>
+
+    <plurals name="devices_found">
+        <item quantity="one">%1$d device found</item>
+        <item quantity="other">%1$d devices found</item>
+    </plurals>
+
 </resources>
