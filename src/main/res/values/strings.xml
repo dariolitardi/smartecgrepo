@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">SmartECG</string>
-    <string name="title_activity_home">HomeActivity</string>
     <string name="name">Your name</string>
     <string name="age">Age</string>
     <string name="weight">Body weight</string>
@@ -11,18 +10,17 @@
         <item>Female</item>
     </string-array>
 
-
-    <string name="unknown_characteristic">Unknown characteristic</string>
-    <string name="unknown_service">Unknown service</string>
-
-    <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
-    <string name="scan_devices">Scan</string>
-    <string name="stop_scanning">Stop</string>
-    <string name="scan_running">Scan running…</string>
-
-    <plurals name="devices_found">
-        <item quantity="one">%1$d device found</item>
-        <item quantity="other">%1$d devices found</item>
-    </plurals>
+    <string name="start_scan">Start scanning</string>
+    <string name="stop_scan">Stop scanning</string>
+    <string name="connect_fail">Connection failed</string>
+    <string name="disconnected">Bluetooth device disconnected</string>
+    <string name="connect">Connect</string>
+    <string name="connected">Connected</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="unable_to_start_service">Unable to start, try to reconnect to the bluetooth device</string>
+    <string name="start_service">Start service</string>
+    <string name="stop_service">Stop service</string>
+    <string name="connect_to_ble_device">Connect</string>
+    <string name="please_wait">Please wait...</string>
 
 </resources>
