@@ -25,223 +25,268 @@ import butterknife.Unbinder;
 
 import static com.dario.smartecg.ScanActivity.BLE_DEVICE;
 import static com.dario.smartecg.ScanActivity.BLE_DEVICE_DISCONNECTED;
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class HomeActivity extends Activity implements View.OnClickListener, ServiceConnection, HeartbeatService.OnHeartbeatListener {
+import com.dario.smartecg.navdrawer.NavDrawerItem;
+import com.dario.smartecg.navdrawer.NavDrawerListAdapter;
 
-    private final static String LOG_TAG = HomeActivity.class.getSimpleName();
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    @BindView(R.id.connect_button)
-    Button connectButton;
-    @BindView(R.id.start_button)
-    Button startButton;
-    @BindView(R.id.text_view)
-    TextView textView;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
-    private static final int OPEN_SCAN_ACTIVITY = 1;
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+import android.widget.Toast;
 
-    private Unbinder unbinder;
+public class HomeActivity extends FragmentActivity  {
 
-    private HeartbeatService service;
+    private static final int NEW_ACTIVITY_ON_TOP = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK;
 
-    private boolean isBound;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private boolean isHome = true;
+    // nav drawer title
+    private CharSequence mDrawerTitle;
 
-    private BleDevice bleDevice;
+    // used to store app title
+    private CharSequence mTitle;
 
-    private Knn KNN;
-
+    // slide menu items
+    private String[] navMenuTitles;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
 
-        unbinder = ButterKnife.bind(this);
+        mTitle = mDrawerTitle = getTitle();
 
-        connectButton.setOnClickListener(this);
-        startButton.setOnClickListener(this);
+        // load slide menu items
+        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
-        setupKNN();
+        // nav drawer icons from resources
+        TypedArray navMenuIcons = getResources()
+                .obtainTypedArray(R.array.nav_drawer_icons);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+
+        ArrayList<NavDrawerItem> navDrawerItems = new ArrayList<>();
+
+        // adding nav drawer items to array
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+
+        // Recycle the typed array
+        navMenuIcons.recycle();
+
+        mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
+
+        // setting the nav drawer list adapter
+        NavDrawerListAdapter adapter = new NavDrawerListAdapter(getApplicationContext(),
+                navDrawerItems);
+        mDrawerList.setAdapter(adapter);
+
+        // enabling action bar app icon and behaving it as toggle button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, //nav menu toggle icon
+                R.string.app_name, // nav drawer open - description for accessibility
+                R.string.app_name // nav drawer close - description for accessibility
+        ) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mTitle);
+                // calling onPrepareOptionsMenu() to show action bar icons
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(mDrawerTitle);
+                // calling onPrepareOptionsMenu() to hide action bar icons
+                invalidateOptionsMenu();
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        if (savedInstanceState == null) {
+            // on first time display view for first nav item
+            displayView(0);
+        }
+
+
     }
 
-    private void setupKNN() {
-        new Thread(() -> {
-            try {
-                if (KNN == null) {
-                    KNN = new Knn(getAssets().open("Dati.txt"));
-                }
 
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "ciao", Toast.LENGTH_LONG).show());
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // toggle nav drawer on selecting action bar app icon/title
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle action bar actions click
+        return super.onOptionsItemSelected(item);
+    }
 
-                double heartbeat[] = {800.900000, 800.800000, 800.400000, 800.000000, 800.7};
 
-                if (KNN.prediction(heartbeat) == 0) {
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "No Fibrillation", Toast.LENGTH_LONG).show());
-                } else {
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Fibrillation", Toast.LENGTH_LONG).show());
-                }
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error", e);
-            }
-        }).start();
+    /**
+     * Diplaying fragment view for selected nav drawer list item
+     */
+    private void displayView(int position) {
+        // update the main content by replacing fragments
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new HomeFragment();
+                break;
+            case 1:
+                fragment = new UserProfileFragment();
+                break;
+            case 2:
+                fragment = new StatisticsFragment();
+                break;
+            case 3: // Logout item
+                logout();
+                return;
+        }
+
+        if (fragment != null) {
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_container, fragment).commit();
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            setTitle(navMenuTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+            isHome = position == 0;
+            Toast.makeText(getApplicationContext(), String.valueOf(isHome), Toast.LENGTH_LONG).show();
+
+        } else {
+            // error in creating fragment
+            Log.e("HomeActivity", "Error in creating fragment");
+        }
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getActionBar().setTitle(mTitle);
+    }
+
+    /**
+     * When using the ActionBarDrawerToggle, you must call it during
+     * onPostCreate() and onConfigurationChanged()...
+     */
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onBackPressed() {
-        finish();
-    }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.connect_button:
-                openScanActivity();
-                break;
-            case R.id.start_button:
-                if (startButton.getText().equals(getString(R.string.start_service))) {
-                    startHeartbeatService();
-                } else if (startButton.getText().equals(getString(R.string.stop_service))) {
-                    stopHeartbeatService(false);
-                }
-                break;
+        if (isHome) {
+
+            finish();
+        }
+        else {
+            isHome = true;
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_container, new HomeFragment()).commit();
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(0, true);
+            mDrawerList.setSelection(0);
+            setTitle(navMenuTitles[0]);
+            mDrawerLayout.closeDrawer(mDrawerList);
         }
     }
 
-    private void startHeartbeatService() {
-        if (startupService()) {
-            startButton.setText(R.string.stop_service);
-            textView.setText("Service started");
+    /**
+     * Slide menu item click listener
+     */
+    private class SlideMenuClickListener implements
+            ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            // display view for selected nav drawer item
+            displayView(position);
         }
     }
 
-    private void stopHeartbeatService(boolean isDisconnection) {
-        shutdownService(isDisconnection);
-
-        startButton.setText(R.string.start_service);
-        textView.setText("Service stopped");
+    private void logout() {
+        mDrawerLayout.closeDrawer(mDrawerList);
+UserSession.expireSession(getApplicationContext());
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent.addFlags(NEW_ACTIVITY_ON_TOP));
+        Toast.makeText(getApplicationContext(), "provaaa", Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (service != null && !isBound) {
-            Intent intent = new Intent(this, HeartbeatService.class);
-            isBound = bindService(intent, this, Context.BIND_AUTO_CREATE);
 
-            Log.v(LOG_TAG, "Bind service");
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (service != null && isBound) {
-            unbindService(this);
-            isBound = false;
-
-            Log.v(LOG_TAG, "Unbind service");
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
-        bleDevice = null;
-        BleManager.getInstance().disconnectAllDevice();
-        BleManager.getInstance().destroy();
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == OPEN_SCAN_ACTIVITY) {
-            if (data.getBooleanExtra(BLE_DEVICE_DISCONNECTED, false)) {
-                stopHeartbeatService(true);
-            }
-            if (resultCode == Activity.RESULT_OK) {
-                bleDevice = data.getParcelableExtra(BLE_DEVICE);
-            }
-        }
-    }
-
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder binder) {
-        HeartbeatService.MyBinder b = (HeartbeatService.MyBinder) binder;
-
-        if (service == null) {
-            service = b.getService();
-            service.setOnHeartbeatListener(this);
-
-            if (service.setup()) {
-                service.startHeartbeatNotifications();
-                Log.v(LOG_TAG, "Service started");
-            } else {
-                Toast.makeText(this, R.string.unable_to_start_service, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-        /*if (service != null && isBound) {
-            unbindService(this);
-            isBound = false;
-        }*/
-    }
-
-    private void openScanActivity() {
-        startActivityForResult(new Intent(this, ScanActivity.class), OPEN_SCAN_ACTIVITY);
-    }
-
-    private boolean startupService() {
-        if (service == null && !isBound && bleDevice != null && BleManager.getInstance().isConnected(bleDevice)) {
-            Intent intent = new Intent(this, HeartbeatService.class);
-            intent.putExtra(BLE_DEVICE, bleDevice);
-            isBound = bindService(intent, this, Context.BIND_AUTO_CREATE);
-            Log.v(LOG_TAG, "Service created");
-            return true;
-        }
-        return false;
-    }
-
-    private void shutdownService(boolean isDisconnection) {
-        if (service != null) {
-            service.stopHeartbeatNotifications();
-            service.stopSelf();
-            service = null;
-            Log.v(LOG_TAG, "Service stopped");
-        }
-
-        if (isBound) {
-            unbindService(this);
-            isBound = false;
-        }
-
-        if (isDisconnection) {
-            service = null;
-            isBound = false;
-        }
-    }
-
-    int n = 0;
-
-    @Override
-    public void heartbeat(short BPM) {
-        if (textView != null) {
-            textView.setText(String.valueOf(n++) + ") BPM:" + BPM);
-        }
-    }
-
-    @Override
-    public void sensorError() {
-        if (textView != null) {
-            textView.setText(String.valueOf(n++) + ") Sensor error");
-        }
-    }
-
-    @Override
-    public void deviceDisconnected() {
-        stopHeartbeatService(true);
-    }
 }

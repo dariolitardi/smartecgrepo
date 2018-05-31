@@ -3,4 +3,24 @@
     <color name="colorPrimary">#B71C1C</color>
     <color name="colorPrimaryDark">#921616</color>
     <color name="colorAccent">#FFc107</color>
+
+
+        <color name="red">#FF0000</color>
+        <color name="green">#00FF00</color>
+        <color name="blue">#0000FF</color>
+        <color name="white">#FFFFFF</color>
+        <color name="black">#000000</color>
+        <color name="grey">#BBBBBB</color>
+        <color name="light_grey">#EEEEEE</color>
+        <color name="dark_grey">#555555</color>
+        <!--Application colors-->
+        <string name="error_message_color">#FF0000</string>
+        <color name="list_item_title">#fff</color>
+        <color name="list_background">#303030</color>
+        <color name="list_background_pressed">#992416</color>
+        <color name="list_divider">#272727</color>
+        <color name="counter_text_bg">#626262</color>
+        <color name="counter_text_color">#c5c4c4</color>
+
+
 </resources>

@@ -6,5 +6,38 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorControlNormal">@android:color/white</item>
     </style>
+    <!-- Base application theme. -->
 
+
+    <style name="SmartECGTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/RedActionBar</item>
+    </style>
+
+    <style name="RedActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:background">@android:color/holo_red_dark</item>
+        <item name="android:titleTextStyle">@style/RedActionBarText</item>
+    </style>
+
+    <style name="RedActionBarText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="transparent.windowNoTitle" parent="android:Theme.Holo.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
 </resources>

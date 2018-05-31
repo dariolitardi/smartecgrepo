@@ -2,9 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sfondo_main"
+    android:backgroundTint="@color/white"
     android:orientation="vertical"
     android:weightSum="1"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
     <TextView
@@ -14,18 +15,26 @@
         android:layout_marginTop="100dp"
     android:text="Welcome to SmartECG"
         android:textSize="25sp"
+        android:textColor="@android:color/holo_red_dark"
 
-        android:textColor="@android:color/white"
+        />
+    <ImageView
+
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/iconamain"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
 
         />
 
     <EditText
         android:id="@+id/name"
         android:layout_width="220dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/name"
+        android:layout_marginTop="50dp"
+
         android:hint="@string/name"
         android:textColorHint="@android:color/darker_gray"
         android:inputType="text"
@@ -36,59 +45,25 @@
         />
     <Spinner
         android:layout_width="220dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-   android:background="@drawable/name"
-        android:entries="@array/gender"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
+        android:id="@+id/gender"
 
    />
     <EditText
         android:layout_width="220dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:background="@drawable/name"
         android:hint="@string/age"
         android:inputType="number"
         android:paddingLeft="7dp"
         android:textColorHint="@android:color/darker_gray"
-
+android:id="@+id/age"
         android:textColor="@android:color/black"
        />
 
-    <EditText
-        android:layout_width="220dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/name"
-        android:hint="@string/height"
-        android:inputType="number"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-
-        />
-
-    <EditText
-        android:layout_width="220dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/name"
-        android:hint="@string/weight"
-        android:inputType="number"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"
-        android:textColorHint="@android:color/darker_gray"
-
-        android:textColor="@android:color/black"
-
-        />
 <ImageButton
 android:id="@+id/goButton"
     android:layout_width="90dp"
