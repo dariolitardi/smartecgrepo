@@ -2,6 +2,9 @@ package com.dario.smartecg;
 
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -47,6 +51,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -58,6 +63,7 @@ import android.widget.Toast;
 import com.clj.fastble.BleManager;
 import com.clj.fastble.data.BleDevice;
 import com.dario.smartecg.knn.Knn;
+
 import android.support.v4.app.Fragment;
 
 import java.io.IOException;
@@ -65,6 +71,8 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.dario.smartecg.ScanActivity.BLE_DEVICE;
 import static com.dario.smartecg.ScanActivity.BLE_DEVICE_DISCONNECTED;
 
@@ -78,8 +86,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Serv
 
     private static final int OPEN_SCAN_ACTIVITY = 1;
 
-    private Unbinder unbinder;
-
     private HeartbeatService service;
 
     private boolean isBound;
@@ -92,16 +98,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Serv
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-connectButton=(Button) rootView.findViewById(R.id.connect_button);
-        startButton=(Button) rootView.findViewById(R.id.start_button);
-        textView=(TextView) rootView.findViewById(R.id.text_view);
-        unbinder = ButterKnife.bind(getActivity());
+        connectButton = (Button) rootView.findViewById(R.id.connect_button);
+        startButton = (Button) rootView.findViewById(R.id.start_button);
+        textView = (TextView) rootView.findViewById(R.id.text_view);
 
         connectButton.setOnClickListener(this);
         startButton.setOnClickListener(this);
 
         setupKNN();
-return rootView;
+        return rootView;
     }
 
 
@@ -182,9 +187,6 @@ return rootView;
 
     @Override
     public void onDestroy() {
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
         bleDevice = null;
         BleManager.getInstance().disconnectAllDevice();
         BleManager.getInstance().destroy();
