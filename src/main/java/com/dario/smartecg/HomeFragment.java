@@ -2,147 +2,85 @@ package com.dario.smartecg;
 
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.clj.fastble.BleManager;
-import com.dario.smartecg.knn.Knn;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-
-import android.os.Bundle;
-import android.os.IBinder;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.clj.fastble.BleManager;
 import com.clj.fastble.data.BleDevice;
-import com.dario.smartecg.knn.Knn;
 
-import android.support.v4.app.Fragment;
-
-import java.io.IOException;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.dario.smartecg.ScanActivity.BLE_DEVICE;
 import static com.dario.smartecg.ScanActivity.BLE_DEVICE_DISCONNECTED;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, ServiceConnection, HeartbeatService.OnHeartbeatListener {
     private final static String LOG_TAG = HomeActivity.class.getSimpleName();
-
-    Button connectButton;
-    Button startButton;
-
-    TextView textView;
-
     private static final int OPEN_SCAN_ACTIVITY = 1;
 
+    TextView textView;
+    TextView textViewBPM;
+    ImageView heartbeatImage;
+    ImageButton startButton;
+
     private HeartbeatService service;
-
     private boolean isBound;
-
     private BleDevice bleDevice;
-
-    private Knn KNN;
+    private boolean started = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        connectButton = (Button) rootView.findViewById(R.id.connect_button);
-        startButton = (Button) rootView.findViewById(R.id.start_button);
-        textView = (TextView) rootView.findViewById(R.id.text_view);
+        textView = rootView.findViewById(R.id.text_view);
+        textViewBPM = rootView.findViewById(R.id.text_view_bpm);
+        heartbeatImage = rootView.findViewById(R.id.heartbeat_image);
 
-        connectButton.setOnClickListener(this);
+        startButton = rootView.findViewById(R.id.start_button);
         startButton.setOnClickListener(this);
 
-        setupKNN();
+        setHasOptionsMenu(true);
+
         return rootView;
     }
 
-
-    private void setupKNN() {
-        new Thread(() -> {
-            try {
-                if (KNN == null) {
-                    KNN = new Knn(getActivity().getAssets().open("Dati.txt"));
-                }
-
-                getActivity().runOnUiThread(() -> Toast.makeText(getActivity().getApplicationContext(), "ciao", Toast.LENGTH_LONG).show());
-
-                double heartbeat[] = {800.900000, 800.800000, 800.400000, 800.000000, 800.7};
-
-                if (KNN.prediction(heartbeat) == 0) {
-                    getActivity().runOnUiThread(() -> Toast.makeText(getActivity().getApplicationContext(), "No Fibrillation", Toast.LENGTH_LONG).show());
-                } else {
-                    getActivity().runOnUiThread(() -> Toast.makeText(getActivity().getApplicationContext(), "Fibrillation", Toast.LENGTH_LONG).show());
-                }
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error", e);
-            }
-        }).start();
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_connect:
+                openScanActivity();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.connect_button:
-                openScanActivity();
-                break;
             case R.id.start_button:
-                if (startButton.getText().equals(getString(R.string.start_service))) {
+                if (!started) {
                     startHeartbeatService();
-                } else if (startButton.getText().equals(getString(R.string.stop_service))) {
+                } else {
                     stopHeartbeatService(false);
                 }
                 break;
@@ -151,16 +89,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Serv
 
     private void startHeartbeatService() {
         if (startupService()) {
-            startButton.setText(R.string.stop_service);
-            textView.setText("Service started");
+            startButton.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.stopimage));
+
+            Toast.makeText(getActivity(), "Session started", Toast.LENGTH_SHORT).show();
+            started = true;
+        } else {
+            Toast.makeText(getActivity(), "You are not connected to a bluetooth device", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void stopHeartbeatService(boolean isDisconnection) {
         shutdownService(isDisconnection);
 
-        startButton.setText(R.string.start_service);
-        textView.setText("Service stopped");
+        started = false;
+        startButton.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.startimage));
+        textView.setText("0");
+
+        Toast.makeText(getActivity(), "Session stopped", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -264,20 +209,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Serv
         }
     }
 
-    int n = 0;
-
     @Override
     public void heartbeat(short BPM) {
         if (textView != null) {
-            textView.setText(String.valueOf(n++) + ") BPM:" + BPM);
+            textView.setText(BPM);
+        }
+
+        if (heartbeatImage != null) {
+            heartbeatImage.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.flash));
         }
     }
 
     @Override
     public void sensorError() {
-        if (textView != null) {
-            textView.setText(String.valueOf(n++) + ") Sensor error");
-        }
+        /*if (textView != null) {
+            textView.setText("Sensor error");
+        }*/
     }
 
     @Override

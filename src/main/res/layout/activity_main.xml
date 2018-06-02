@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:backgroundTint="@color/white"
     android:orientation="vertical"
     android:weightSum="1"
-    android:background="@color/white"
     tools:context=".MainActivity">
 
     <TextView
@@ -13,20 +13,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
-    android:text="Welcome to SmartECG"
-        android:textSize="25sp"
-        android:textColor="@android:color/holo_red_dark"
+        android:text="Welcome to SmartECG"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp" />
 
-        />
     <ImageView
-
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/iconamain"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-
-        />
+        android:background="@drawable/iconamain" />
 
     <EditText
         android:id="@+id/name"
@@ -34,24 +30,22 @@
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-
         android:hint="@string/name"
-        android:textColorHint="@android:color/darker_gray"
         android:inputType="text"
         android:paddingLeft="7dp"
         android:paddingRight="7dp"
         android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray" />
 
-        />
     <Spinner
+        android:id="@+id/gender"
         android:layout_width="220dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:id="@+id/gender"
+        android:layout_marginTop="20dp" />
 
-   />
     <EditText
+        android:id="@+id/age"
         android:layout_width="220dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
@@ -59,18 +53,15 @@
         android:hint="@string/age"
         android:inputType="number"
         android:paddingLeft="7dp"
-        android:textColorHint="@android:color/darker_gray"
-android:id="@+id/age"
         android:textColor="@android:color/black"
-       />
+        android:textColorHint="@android:color/darker_gray" />
 
-<ImageButton
-android:id="@+id/goButton"
-    android:layout_width="90dp"
-    android:layout_height="90dp"
-    android:layout_gravity="center_horizontal"
-    android:background="@drawable/gobutton"
-    android:layout_marginTop="25dp"/>
-
+    <ImageButton
+        android:id="@+id/goButton"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/goimage" />
 
 </LinearLayout>

@@ -18,9 +18,6 @@ import com.dario.smartecg.R;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.DeviceViewHolder> {
 
     private final static String LOG_TAG = DeviceListAdapter.class.getSimpleName();
@@ -37,17 +34,33 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
         bleDeviceList = new SortedList<>(BleDevice.class, new SortedListAdapterCallback<BleDevice>(this) {
             @Override
             public int compare(BleDevice n1, BleDevice n2) {
-                return n1.getName().compareToIgnoreCase(n2.getName());
+                if (n1.getName() != null && n2.getName() != null) {
+                    return n1.getName().compareToIgnoreCase(n2.getName());
+                } else if (n1.getMac() != null && n2.getMac() != null) {
+                    return n1.getMac().compareToIgnoreCase(n2.getMac());
+                } else {
+                    return 0;
+                }
             }
 
             @Override
             public boolean areContentsTheSame(BleDevice oldItem, BleDevice newItem) {
-                return oldItem.getName().equals(newItem.getName()) && oldItem.getMac().equals(newItem.getMac());
+                if (oldItem.getName() != null && newItem.getName() != null) {
+                    return oldItem.getName().equals(newItem.getName());
+                } else if (oldItem.getMac() != null && newItem.getMac() != null) {
+                    return oldItem.getMac().equals(newItem.getMac());
+                } else {
+                    return false;
+                }
             }
 
             @Override
             public boolean areItemsTheSame(BleDevice item1, BleDevice item2) {
-                return item1.getName().equals(item2.getName()) && item1.getMac().equals(item2.getMac());
+                if (item1.getName() != null && item2.getName() != null && item1.getMac() != null && item2.getMac() != null) {
+                    return item1.getName().equals(item2.getName()) && item1.getMac().equals(item2.getMac());
+                } else {
+                    return false;
+                }
             }
         });
     }
@@ -68,6 +81,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
 
         boolean isConnected = BleManager.getInstance().isConnected(bleDevice);
         String name = bleDevice.getName();
+        if (name == null || name.isEmpty()) {
+            name = "Device";
+        }
         String mac = bleDevice.getMac();
         int rssi = bleDevice.getRssi();
         holder.textName.setText(name);
@@ -122,32 +138,32 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
         bleDeviceList.endBatchedUpdates();
     }
 
-    public class DeviceViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.text_name)
-        TextView textName;
-        @BindView(R.id.text_mac)
-        TextView textMac;
-        @BindView(R.id.text_rssi)
-        TextView textRssi;
-        @BindView(R.id.layout_idle)
-        LinearLayout layoutIdle;
-        @BindView(R.id.layout_connected)
-        LinearLayout layoutConnected;
-        @BindView(R.id.disconnect_button)
-        Button disconnectButton;
-        @BindView(R.id.connect_button)
-        Button connectButton;
-
-        DeviceViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
     public interface OnDeviceClickListener {
         void onConnect(BleDevice bleDevice);
 
         void onDisconnect(BleDevice bleDevice);
+    }
+
+    class DeviceViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView textName;
+        private TextView textMac;
+        private TextView textRssi;
+        private LinearLayout layoutIdle;
+        private LinearLayout layoutConnected;
+        private Button disconnectButton;
+        private Button connectButton;
+
+        DeviceViewHolder(View itemView) {
+            super(itemView);
+
+            textName = itemView.findViewById(R.id.text_name);
+            textMac = itemView.findViewById(R.id.text_mac);
+            textRssi = itemView.findViewById(R.id.text_rssi);
+            layoutIdle = itemView.findViewById(R.id.layout_idle);
+            layoutConnected = itemView.findViewById(R.id.layout_connected);
+            disconnectButton = itemView.findViewById(R.id.disconnect_button);
+            connectButton = itemView.findViewById(R.id.connect_button);
+        }
     }
 }

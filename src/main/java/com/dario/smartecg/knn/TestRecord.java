@@ -3,10 +3,10 @@
 package com.dario.smartecg.knn;
 
 
-public class TestRecord extends Record{
-	int predictedLabel;
+public class TestRecord extends Record {
+    int predictedLabel;
 
-	TestRecord(double[] attributes, int classLabel) {
-		super(attributes, classLabel);
-	}
+    TestRecord(double[] attributes, int classLabel) {
+        super(attributes, classLabel);
+    }
 }

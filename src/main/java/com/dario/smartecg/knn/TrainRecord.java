@@ -3,11 +3,10 @@
 package com.dario.smartecg.knn;
 
 
-
 public class TrainRecord extends Record {
-	double distance;
+    double distance;
 
-	TrainRecord(double[] attributes, int classLabel) {
-		super(attributes, classLabel);
-	}
+    TrainRecord(double[] attributes, int classLabel) {
+        super(attributes, classLabel);
+    }
 }

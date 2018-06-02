@@ -8,15 +8,11 @@ import java.util.List;
 
 public class ObserverManager implements Observable {
 
+    private List<Observer> observers = new ArrayList<>();
+
     public static ObserverManager getInstance() {
         return ObserverManagerHolder.sObserverManager;
     }
-
-    private static class ObserverManagerHolder {
-        private static final ObserverManager sObserverManager = new ObserverManager();
-    }
-
-    private List<Observer> observers = new ArrayList<>();
 
     @Override
     public void addObserver(Observer obj) {
@@ -37,6 +33,10 @@ public class ObserverManager implements Observable {
             Observer o = observers.get(i);
             o.disConnected(bleDevice);
         }
+    }
+
+    private static class ObserverManagerHolder {
+        private static final ObserverManager sObserverManager = new ObserverManager();
     }
 
 }

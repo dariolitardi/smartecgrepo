@@ -18,7 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,37 +35,19 @@ import com.dario.smartecg.adapter.DeviceListAdapter;
 import com.dario.smartecg.rx.ObserverManager;
 
 import java.util.List;
-import java.util.UUID;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class ScanActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = ScanActivity.class.getSimpleName();
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.scan_button)
-    Button scanButton;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-
-    private static final int REQUEST_CODE_ENABLE_BLUETOOTH = 1;
-
-    private static final int REQUEST_CODE_PERMISSION_LOCATION = 2;
-
     public static final String BLE_DEVICE = "BLE_DEVICE";
-
     public static final String BLE_DEVICE_DISCONNECTED = "BLE_DEVICE_DISCONNECTED";
-
+    private static final String LOG_TAG = ScanActivity.class.getSimpleName();
+    private static final int REQUEST_CODE_ENABLE_BLUETOOTH = 1;
+    private static final int REQUEST_CODE_PERMISSION_LOCATION = 2;
     private static final long SCAN_PERIOD = 10000;
-
-    private Unbinder unbinder;
-
+    private Toolbar toolbar;
+    private Button scanButton;
+    private ProgressBar progressBar;
+    private RecyclerView recyclerView;
     private ProgressDialog progressDialog;
 
     private DeviceListAdapter adapter;
@@ -82,7 +63,10 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        unbinder = ButterKnife.bind(this);
+        toolbar = findViewById(R.id.toolbar);
+        scanButton = findViewById(R.id.scan_button);
+        progressBar = findViewById(R.id.progress_bar);
+        recyclerView = findViewById(R.id.recycler_view);
 
         setupToolbar();
         setupAdapter();
@@ -106,9 +90,6 @@ public class ScanActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
         super.onDestroy();
     }
 

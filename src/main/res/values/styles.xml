@@ -6,10 +6,14 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorControlNormal">@android:color/white</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <!-- Base application theme. -->
 
 
-    <style name="SmartECGTheme" parent="@android:style/Theme.Holo.Light">
+    <!--<style name="SmartECGTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/RedActionBar</item>
     </style>
 
@@ -39,5 +43,5 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
-    </style>
+    </style>-->
 </resources>

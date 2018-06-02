@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:background="@drawable/list_selector"
-    android:backgroundTint="@android:color/holo_red_dark"
+    android:backgroundTint="@color/colorPrimary"
     android:focusableInTouchMode="false">
 
     <ImageView
@@ -22,10 +21,8 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:layout_toRightOf="@id/icon"
-        android:gravity="center_vertical"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:paddingRight="40dp"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="@color/list_item_title" />
 
