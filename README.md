@@ -1,6 +1,6 @@
 # SmartECG  
 
-A system to detect fibrillations in athletes using a **heartbeat** sensor, like a heart rate monitor. The athletes is notified if he is affected by **atrial fibrillation**.
+A system to detect fibrillations in athletes using a **heartbeat** sensor, like a heart rate monitor. The athlete is notified if he is affected by **atrial fibrillation**.
 
 ## Components
 ### Hardware
