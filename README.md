@@ -31,7 +31,7 @@ The heartbeats are pre-processed by obtaining five values that will be submitted
 1. The last beat
 1. The second to last beat
 1. The third to last beat
-1. The average of the ten beats
+1. The average of the last ten beats
 
 ### The machine learning algorithm
 The Machine Learning algorithm used is [K-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).  
