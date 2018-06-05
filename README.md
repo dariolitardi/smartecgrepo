@@ -37,6 +37,8 @@ The heartbeats are pre-processed by obtaining five values that will be submitted
 The Machine Learning algorithm used is [K-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).  
 The accuracy of prediction is 94% - 97%.  
 <img src="pictures/knn_correctness.png" width="500" />  
+The algorithm was implemented in java by Amazon software engineer Li Gong. It is a [GitHub project](http://github.com/wihoho/KNN).  
+
 
 ## Code
 * [STM Nucleo-F401RE Board](./Nucleo)  
