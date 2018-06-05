@@ -56,7 +56,7 @@ The accuracy of prediction is 94% - 97%.
 
 
 ## How to compile the code
-In order to to compile the code for the Nucleo Board you have to add STM32 boards support to Arduino IDE.  
+In order to compile the code for the Nucleo Board you have to add STM32 boards support to Arduino IDE.  
 You can find the tutorial at this link: https://github.com/stm32duino/wiki/wiki/Getting-Started
 
 ## Links
