@@ -34,9 +34,8 @@ The heartbeats are pre-processed by obtaining five values that will be submitted
 1. The average of the ten beats
 
 ### The machine learning algorithm
-The Machine Learning algorithm used is [K-nearest neighbor](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).  
-
-The accuracy of prediction is 94% - 97%.
+The Machine Learning algorithm used is [K-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).  
+The accuracy of prediction is 94% - 97%.  
 <img src="pictures/knn_correctness.png" width="500" />  
 
 ## Code
