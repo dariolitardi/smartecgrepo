@@ -34,14 +34,14 @@ The heartbeats are pre-processed by obtaining five values that will be submitted
 1. The average of the ten beats
 
 ### The machine learning algorithm
-The Machine Learning algorithm used is [K-nearest neighbor] (https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).  
+The Machine Learning algorithm used is [K-nearest neighbor](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).  
 
 The accuracy of prediction is 94% - 97%.
 <img src="pictures/knn_correctness.png" width="500" />  
 
 ## Code
-* [STM Nucleo-F401RE Board] (./nucleo)  
-* [Android application] (./android)  
+* [STM Nucleo-F401RE Board](./Nucleo)  
+* [Android application](./Android)  
 
 
 ## Android application
@@ -66,11 +66,11 @@ You can find the tutorial at this link: https://github.com/stm32duino/wiki/wiki/
 * https://www.slideshare.net/DarioLitardi/presentazione-finale-99931764
 
 ### LinkedIn contacts
-* [Andrea Lisanti] (https://www.linkedin.com/in/andrea-lisanti)  
-* [Dario Litardi] (https://www.linkedin.com/in/dario-litardi-84851915b/)  
-* [David Buscema] (https://www.linkedin.com/in/david-buscema)
+* [Andrea Lisanti](https://www.linkedin.com/in/andrea-lisanti)  
+* [Dario Litardi](https://www.linkedin.com/in/dario-litardi-84851915b/)  
+* [David Buscema](https://www.linkedin.com/in/david-buscema)
 
 ### Other useful links
-* [STM32 Nucleo-F401RE] (http://www.st.com/en/evaluation-tools/nucleo-f401re.html)  
-* [X-Nucleo-IDB04A1] (http://www.st.com/en/ecosystems/x-nucleo-idb04a1.html)  
-* [Pulse sensor] (https://pulsesensor.com/)
+* [STM32 Nucleo-F401RE](http://www.st.com/en/evaluation-tools/nucleo-f401re.html)  
+* [X-Nucleo-IDB04A1](http://www.st.com/en/ecosystems/x-nucleo-idb04a1.html)  
+* [Pulse sensor](https://pulsesensor.com/)
