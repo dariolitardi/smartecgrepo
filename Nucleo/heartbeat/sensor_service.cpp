@@ -221,7 +221,7 @@ tBleStatus SensorServiceClass::Add_Heartbeat_Service(void)
   if (ret != BLE_STATUS_SUCCESS) goto fail;
 
   COPY_BPM_UUID(uuid);
-  ret =  aci_gatt_add_char(heartServHandle, UUID_TYPE_128, uuid, 12,
+  ret =  aci_gatt_add_char(heartServHandle, UUID_TYPE_128, uuid, 6,
                            CHAR_PROP_NOTIFY|CHAR_PROP_READ,
                            ATTR_PERMISSION_NONE,
                            GATT_NOTIFY_READ_REQ_AND_WAIT_FOR_APPL_RESP,
@@ -246,23 +246,17 @@ fail:
 tBleStatus SensorServiceClass::Heartbeat_Notify(Heartbeat *data)
 {
   tBleStatus ret;
-  uint8_t buff[12];
+  uint8_t buff[6];
 
   heartbeat_data.ERR = data->ERR;
-  heartbeat_data.meanOfLast3 = data->meanOfLast3;
-  heartbeat_data.lastIBI = data->lastIBI;
-  heartbeat_data.secondToLastIBI = data->secondToLastIBI;
-  heartbeat_data.thirdToLastIBI = data->thirdToLastIBI;
-  heartbeat_data.meanOfLast10 = data->meanOfLast10;
+  heartbeat_data.bpm = data->bpm;
+  heartbeat_data.fibrillation = data->fibrillation;
 
   STORE_LE_16(buff, heartbeat_data.ERR);
-  STORE_LE_16(buff+2, heartbeat_data.meanOfLast3);
-  STORE_LE_16(buff+4, heartbeat_data.lastIBI);
-  STORE_LE_16(buff+6, heartbeat_data.secondToLastIBI);
-  STORE_LE_16(buff+8, heartbeat_data.thirdToLastIBI);
-  STORE_LE_16(buff+10, heartbeat_data.meanOfLast10);
+  STORE_LE_16(buff+2, heartbeat_data.bpm);
+  STORE_LE_16(buff+4, heartbeat_data.fibrillation);
 
-  ret = aci_gatt_update_char_value(heartServHandle, bpmCharHandle, 0, 12, buff);
+  ret = aci_gatt_update_char_value(heartServHandle, bpmCharHandle, 0, 6, buff);
 
   if (ret != BLE_STATUS_SUCCESS){
     PRINTF("Error while updating BPM characteristic.\n") ;

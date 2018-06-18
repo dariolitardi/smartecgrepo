@@ -98,6 +98,16 @@ void printIBIs() {
   Serial.println();
 }
 
+void printFibrillation(int fibrillation) {
+  if (!log(OFF)) return;
+  
+  if (fibrillation) {
+    Serial.println("FIBRILLATION");
+  } else {
+    Serial.println("NO FIBRILLATION");
+  }
+}
+
 bool log(int l) {
   return l >= LEVEL;
 }

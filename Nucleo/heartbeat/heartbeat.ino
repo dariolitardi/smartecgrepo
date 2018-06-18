@@ -2,6 +2,9 @@
 #include <SPBTLE_RF.h>
 #include "sensor_service.h"
 
+#include "dataset.h"
+#include "KNN.h"
+
 #define PIN_BLE_SPI_MOSI   (11)
 #define PIN_BLE_SPI_MISO   (12)
 #define PIN_BLE_SPI_SCK    (3)
@@ -69,6 +72,8 @@ short lastIBI = 0;
 short secondToLastIBI = 0;
 short thirdToLastIBI = 0;
 short meanOfLast10 = 0;
+
+int fibrillation;
 
 int noise = 0;
 
@@ -188,6 +193,7 @@ void detectHeartBeat() {
         digitalWrite(LED_BUILTIN, HIGH);
         getMeans(lastIBI);
         ERR = 0;
+        checkFibrillation();
         sendToBluetooth();
       }
 
@@ -241,26 +247,34 @@ void getMeans(short lastIBI) {
   printIBIs();
 
   if (goodValues >= 3) {
-    meanOfLast3 = 60000 / meanLast3Beats();
+    meanOfLast3 = meanLast3Beats();
     printMeanOfLast3(meanOfLast3);
 
     if (goodValues >= 10) {
       pause = LONG_PAUSE;
-      meanOfLast10 = 60000 / meanLast10Beats();
+      meanOfLast10 = meanLast10Beats();
       printMeanOfLast10(meanOfLast10);
     }
   }
+}
+
+void checkFibrillation() {
+  if (meanOfLast10 == 0) {
+    fibrillation = 0;
+    return;
+  }
+
+  double hb[columns] = {meanOfLast3, lastIBI, secondToLastIBI, thirdToLastIBI, meanOfLast10};
+  fibrillation = performKNN((double*) instances, classes, hb, 1, rows, columns);
+  printFibrillation(fibrillation);
 }
 
 void sendToBluetooth() {
   if (SensorService.isConnected() == TRUE) {
 
     heartbeat_data.ERR = ERR;
-    heartbeat_data.meanOfLast3 = meanOfLast3;
-    heartbeat_data.lastIBI = lastIBI;
-    heartbeat_data.secondToLastIBI = secondToLastIBI;
-    heartbeat_data.thirdToLastIBI = thirdToLastIBI;
-    heartbeat_data.meanOfLast10 = meanOfLast10;
+    heartbeat_data.bpm = 60000 / meanOfLast10;
+    heartbeat_data.fibrillation = fibrillation;
 
     SensorService.Heartbeat_Notify(&heartbeat_data);
   }

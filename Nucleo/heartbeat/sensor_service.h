@@ -89,11 +89,8 @@ typedef int i32_t;
  */
 typedef struct {
   i32_t ERR;
-  i32_t meanOfLast3;
-  i32_t lastIBI;
-  i32_t secondToLastIBI;
-  i32_t thirdToLastIBI;
-  i32_t meanOfLast10;
+  i32_t bpm;
+  i32_t fibrillation;
 } Heartbeat;
 /**
  * @}
