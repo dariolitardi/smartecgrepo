@@ -212,7 +212,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Serv
     @Override
     public void heartbeat(short BPM) {
         if (textView != null) {
-            textView.setText(BPM);
+            textView.setText(String.valueOf(BPM));
         }
 
         if (heartbeatImage != null) {

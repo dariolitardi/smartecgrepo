@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -17,13 +18,10 @@ import com.clj.fastble.BleManager;
 import com.clj.fastble.callback.BleNotifyCallback;
 import com.clj.fastble.data.BleDevice;
 import com.clj.fastble.exception.BleException;
-import com.dario.smartecg.knn.Knn;
 import com.dario.smartecg.rx.Observer;
 import com.dario.smartecg.rx.ObserverManager;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 import java.util.Random;
 
 import static android.bluetooth.BluetoothGattCharacteristic.PROPERTY_NOTIFY;
@@ -43,9 +41,11 @@ public class HeartbeatService extends Service implements Observer {
 
     private boolean setupCompleted = false;
 
-    private short[] heartbeats = {0, 0, 0, 0, 0};
+    private short bpm;
 
-    private Knn KNN;
+    private boolean fibrillation;
+
+    private Random random = new Random();
 
     public void setOnHeartbeatListener(@NonNull OnHeartbeatListener onHeartbeatListener) {
         this.onHeartbeatListener = onHeartbeatListener;
@@ -55,20 +55,7 @@ public class HeartbeatService extends Service implements Observer {
     public IBinder onBind(@NonNull Intent intent) {
         this.bleDevice = intent.getParcelableExtra(BLE_DEVICE);
 
-        setupKNN();
         return binder;
-    }
-
-    private void setupKNN() {
-        new Thread(() -> {
-            try {
-                if (KNN == null) {
-                    KNN = new Knn(getAssets().open("Dati.txt"));
-                }
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error", e);
-            }
-        }).start();
     }
 
     public boolean setup() {
@@ -139,18 +126,16 @@ public class HeartbeatService extends Service implements Observer {
                             return;
                         }
 
-                        heartbeats[0] = ByteBuffer.wrap(data, 2, 2).order(LITTLE_ENDIAN).getShort();
-                        heartbeats[1] = ByteBuffer.wrap(data, 4, 2).order(LITTLE_ENDIAN).getShort();
-                        heartbeats[2] = ByteBuffer.wrap(data, 6, 2).order(LITTLE_ENDIAN).getShort();
-                        heartbeats[3] = ByteBuffer.wrap(data, 8, 2).order(LITTLE_ENDIAN).getShort();
-                        heartbeats[4] = ByteBuffer.wrap(data, 10, 2).order(LITTLE_ENDIAN).getShort();//BPM
+                        bpm = ByteBuffer.wrap(data, 2, 2).order(LITTLE_ENDIAN).getShort();//BPM
+                        fibrillation = ByteBuffer.wrap(data, 4, 2).order(LITTLE_ENDIAN).getShort() == 1;
 
-                        heartbeatDetected(heartbeats);
+                        heartbeatDetected(bpm, fibrillation);
                     }
                 });
     }
 
     public void stopHeartbeatNotifications() {
+
         if (!setupCompleted) {
             Log.e(LOG_TAG, "The service is not setup");
             return;
@@ -173,14 +158,14 @@ public class HeartbeatService extends Service implements Observer {
         }
     }
 
-    private void sendNotification(String paramOutput) {
+    private void sendNotification() {
         //Get an instance of NotificationManager//
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.logo)
                         .setContentTitle(getString(R.string.app_name))
-                        .setContentText(paramOutput);
+                        .setContentText("Fibrillation detected");
 
         // Gets an instance of the NotificationManager service//
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -192,34 +177,23 @@ public class HeartbeatService extends Service implements Observer {
         // You can then use this ID whenever you issue a subsequent notification.
         // If the previous notification is still visible, the system will update this existing notification,
         // rather than create a new one. In this example, the notification’s ID is 001//
-        Random random = new Random();
         int m = random.nextInt(9999 - 1000) + 1000;
 
-        notificationManager.notify(m, mBuilder.build());
-    }
-
-    private void heartbeatDetected(short[] heartbeats) {
-        Log.i(LOG_TAG, Arrays.toString(heartbeats));
-
-        checkFibrillation(heartbeats);
-
-        if (onHeartbeatListener != null) {
-            onHeartbeatListener.heartbeat(heartbeats[4]);
+        if (notificationManager != null) {
+            notificationManager.notify(m, mBuilder.build());
         }
     }
 
-    private void checkFibrillation(short[] heartbeats) {
-        new Thread(() -> {
-            double[] hb = new double[5];
-            for (int i = 0; i < 5; i++) {
-                hb[i] = heartbeats[i];
-            }
+    private void heartbeatDetected(short bpm, boolean fibrillation) {
+        Log.i(LOG_TAG, "BPM: " + bpm + " FIBRILLATION:" + fibrillation);
 
-            boolean fibrillation = KNN.prediction(hb) == 1;
-            if (fibrillation) {
-                sendNotification("Fibrillation detected");
-            }
-        }).start();
+        if (fibrillation) {
+            sendNotification();
+        }
+
+        if (onHeartbeatListener != null) {
+            onHeartbeatListener.heartbeat(bpm);
+        }
     }
 
     private void sensorError() {
