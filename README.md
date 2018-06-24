@@ -101,7 +101,7 @@ You can find the tutorial at this link: https://github.com/stm32duino/wiki/wiki/
 ## Links
 
 ### Presentation on Slideshare  
-* https://www.slideshare.net/DarioLitardi/presentazione-finale-99931764
+* https://www.slideshare.net/DarioLitardi/presentazione-finale-102892504
 
 ### LinkedIn contacts
 * [Andrea Lisanti](https://www.linkedin.com/in/andrea-lisanti)  
