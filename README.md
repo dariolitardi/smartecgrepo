@@ -26,7 +26,8 @@ The result is sent via Bluetooth to the android application that shows the BPM (
 
 
 ### The machine learning algorithm
-The Machine Learning algorithm used is [K-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).  
+The Machine Learning algorithm used is [K-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).
+The Machine Learning algorithm is implemented on the STM32 Nucleo board.
 
 The KNN memorizes the training dataset, indeed it doesn't learn a discriminative function from the training data as the traditional machine learning algorithm. This sometimes makes KNN much more efficient in circumstances where traditional algorithms fail.
 All the dataset is stored inside the STM32-board in a data structure. The board then always do comparisons between the new data received from the sensor, and its internal dataset. The KNN implemented on the board uses the Euclidean distance as distance metric to determine the correct result. 
