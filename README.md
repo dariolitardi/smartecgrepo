@@ -17,7 +17,7 @@ Atrial fibrillation is an abnormal heart rhythm characterized by **rapid and irr
 <img src="pictures/architecture.png" width="500" />  
 
 ### Connections
-**STM32 Nucleo board connected to the pulse sensor and the bluetooth module**
+**STM32 Nucleo board connected to the pulse sensor and the bluetooth module**  
 <img src="pictures/connections.jpg" width="300" />
 
 ## How does SmartECG work
