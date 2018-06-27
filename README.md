@@ -26,8 +26,7 @@ The result is sent via Bluetooth to the android application that shows the BPM (
 
 ### How does KNN work?
 In the classification setting, the K-nearest neighbor algorithm essentially boils down to forming a majority vote between the K most similar instances to a given “unseen” observation. Similarity is defined according to a distance metric between two data points. A popular choice is the Euclidean distance given by
-                                                 <img src="pictures/distanzaeuclidea.PNG" width="200" />  
- 
+<p align="center"><img src="pictures/distanzaeuclidea.PNG"  height="40" width="280" />  </p> 
 but other measures can be more suitable for a given setting and include the Manhattan, Chebyshev and Hamming distance.
 
 More formally, given a positive integer K, an unseen observation x and a similarity metric d, KNN classifier performs the following two steps:
@@ -35,8 +34,7 @@ More formally, given a positive integer K, an unseen observation x and a similar
 It runs through the whole dataset computing d between x and each training observation. We’ll call the K points in the training data that are closest to x the set A. Note that K is usually odd to prevent tie situations.
 
 It then estimates the conditional probability for each class, that is, the fraction of points in A with that given class label. (Note I(x) is the indicator function which evaluates to 1 when the argument x is true and 0 otherwise)
-                                                <img src="pictures/probability.PNG" width="200" />  
-
+<p align="center"><img src="pictures/probability.PNG" width="200" />  </p>
 Finally, our input x gets assigned to the class with the largest probability.
 
 In this project, the KNN algorithm is implemented on the STM32 Nucleo board.
