@@ -18,7 +18,7 @@ Atrial fibrillation is an abnormal heart rhythm characterized by **rapid and irr
 
 ### Connections
 **STM32 Nucleo board connected to the pulse sensor and the bluetooth module**
-<img src="pictures/connections.jpg" width="300" />  
+<img src="pictures/connections.jpg" width="300" />
 
 ## How does SmartECG work
 The STM32 Nucleo board detects heartbeats through the pulse sensor. They are pre-processed and then elaborated from a machine learning algorithm. 
