@@ -26,8 +26,23 @@ The result is sent via Bluetooth to the android application that shows the BPM (
 
 
 ### The machine learning algorithm
-The Machine Learning algorithm used is [K-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).
-The Machine Learning algorithm is implemented on the STM32 Nucleo board.
+The Machine Learning algorithm used is KNN.
+
+How does KNN work?
+In the classification setting, the K-nearest neighbor algorithm essentially boils down to forming a majority vote between the K most similar instances to a given “unseen” observation. Similarity is defined according to a distance metric between two data points. A popular choice is the Euclidean distance given by
+                                                  
+but other measures can be more suitable for a given setting and include the Manhattan, Chebyshev and Hamming distance.
+
+More formally, given a positive integer K, an unseen observation x and a similarity metric d, KNN classifier performs the following two steps:
+
+It runs through the whole dataset computing d between x and each training observation. We’ll call the K points in the training data that are closest to x the set A. Note that K is usually odd to prevent tie situations.
+
+It then estimates the conditional probability for each class, that is, the fraction of points in A with that given class label. (Note I(x) is the indicator function which evaluates to 1 when the argument x is true and 0 otherwise)
+
+P(y=j|X=x)=1K∑i∈AI(y(i)=j)
+Finally, our input x gets assigned to the class with the largest probability.
+
+In this project, the KNN algorithm is implemented on the STM32 Nucleo board.
 
 The KNN memorizes the training dataset, indeed it doesn't learn a discriminative function from the training data as the traditional machine learning algorithm. This sometimes makes KNN much more efficient in circumstances where traditional algorithms fail.
 All the dataset is stored inside the STM32-board in a data structure. The board then always do comparisons between the new data received from the sensor, and its internal dataset. The KNN implemented on the board uses the Euclidean distance as distance metric to determine the correct result. 
