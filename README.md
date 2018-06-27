@@ -59,7 +59,7 @@ The choice to use the KNN is due to the excellent results obtained by its execut
 
 Below is a list of all the machine learning algorithms tested with the results obtained:
 
-| Algorithm | Score |
+| Algorithm | Accuracy |
 |:----------|:------|
 | KNN       | 0.957 |
 | SVM       | 0.908 |
