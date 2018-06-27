@@ -40,7 +40,7 @@ Finally, our input x gets assigned to the class with the largest probability.
 In this project, the KNN algorithm is implemented on the STM32 Nucleo board.
 
 The KNN memorizes the training dataset, indeed it doesn't learn a discriminative function from the training data as the traditional machine learning algorithm. This sometimes makes KNN much more efficient in circumstances where traditional algorithms fail.
-All the dataset is stored inside the STM32-board in a data structure. The board then always do comparisons between the new data received from the sensor, and its internal dataset. The KNN implemented on the board uses the Euclidean distance as distance metric to determine the correct result. 
+All the dataset is stored inside the STM32-board in a double array in memory. The board then always do comparisons between the new data received from the sensor, and its internal dataset. The KNN implemented on the board uses the Euclidean distance as distance metric to determine the correct result. 
 
 The KNN algorithm can be summarized by the following steps: 
 1. Choose the number of k and a distance metric. 
@@ -63,7 +63,8 @@ As stated in the article we pre-processed the data calculating the following val
 1. The third to last beat
 1. The average of the last ten beats  
 
-<img src="pictures/datasetcode.PNG" />
+<img src="pictures/datasetcode.PNG" />  
+Trainingset  
 
 We need these values because fibrillation is detected only when the intervals between two beats corresponding to the electrical activation of the ventricles are completely irregular without following a repetitive pattern.
 
