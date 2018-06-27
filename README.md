@@ -22,11 +22,7 @@ Atrial fibrillation is an abnormal heart rhythm characterized by **rapid and irr
 
 ## How does SmartECG work
 The STM32 Nucleo board detects heartbeats through the pulse sensor. They are pre-processed and then elaborated from a machine learning algorithm. 
-The result is sent via Bluetooth to the android application that shows the BPM (beats-per-minute) in the main screen and notify the user when it is affected by atrial fibrillation
-
-
-### The machine learning algorithm
-The Machine Learning algorithm used is KNN.
+The result is sent via Bluetooth to the android application that shows the BPM (beats-per-minute) in the main screen and notify the user when it is affected by atrial fibrillation. The Machine Learning algorithm used is KNN.
 
 ### How does KNN work?
 In the classification setting, the K-nearest neighbor algorithm essentially boils down to forming a majority vote between the K most similar instances to a given “unseen” observation. Similarity is defined according to a distance metric between two data points. A popular choice is the Euclidean distance given by
