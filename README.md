@@ -26,7 +26,7 @@ The result is sent via Bluetooth to the android application that shows the BPM (
 
 ### How does KNN work?
 In the classification setting, the K-nearest neighbor algorithm essentially boils down to forming a majority vote between the K most similar instances to a given “unseen” observation. Similarity is defined according to a distance metric between two data points. A popular choice is the Euclidean distance given by
-<p align="center"><img src="pictures/distanzaeuclidea.PNG"  height="40" width="280" />  </p> 
+<p align="center"><img src="pictures/distanzaeuclidea.PNG"   />  </p> 
 but other measures can be more suitable for a given setting and include the Manhattan, Chebyshev and Hamming distance.
 
 More formally, given a positive integer K, an unseen observation x and a similarity metric d, KNN classifier performs the following two steps:
@@ -34,7 +34,7 @@ More formally, given a positive integer K, an unseen observation x and a similar
 It runs through the whole dataset computing d between x and each training observation. We’ll call the K points in the training data that are closest to x the set A. Note that K is usually odd to prevent tie situations.
 
 It then estimates the conditional probability for each class, that is, the fraction of points in A with that given class label. (Note I(x) is the indicator function which evaluates to 1 when the argument x is true and 0 otherwise)
-<p align="center"><img src="pictures/probability.PNG" width="200" />  </p>
+<p align="center"><img src="pictures/probability.PNG" />  </p>
 Finally, our input x gets assigned to the class with the largest probability.
 
 In this project, the KNN algorithm is implemented on the STM32 Nucleo board.
@@ -61,7 +61,9 @@ As stated in the article we pre-processed the data calculating the following val
 1. The last beat
 1. The second to last beat
 1. The third to last beat
-1. The average of the last ten beats
+1. The average of the last ten beats  
+
+<img src="pictures/datasetcode.PNG" />
 
 We need these values because fibrillation is detected only when the intervals between two beats corresponding to the electrical activation of the ventricles are completely irregular without following a repetitive pattern.
 
@@ -76,9 +78,11 @@ Below is a list of all the machine learning algorithms tested with the results o
 | Random Forest | 0.935 |
 | Random Forest with PCA preprocessing | 0.941 |
 | Logistic Regression | 0.907 |
-| Neural Network | 0.928 |
+| Neural Network | 0.928 |  
 
-<img src="pictures/knn_results.png" width="500" />
+<img src="pictures/knn_results.png" width="500" />  
+
+Chart of the comparison between the accuracies of the tested algorithms  
 
 As we can see from the graph, the KNN achieves the best results.  
 The accuracy of prediction is always between 94% and 97%.  
