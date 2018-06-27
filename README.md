@@ -96,6 +96,13 @@ The image shows an execution of the training set, and where the algorithm predic
 * [STM Nucleo-F401RE Board](./Nucleo)  
 * [Android application](./Android)  
 
+## Performance
+A smart approach involves estimating the test error rate by holding out a subset of the training set from the fitting process. This subset, called the validation set, can be used to select the appropriate level of flexibility of our algorithm. There are different validation approaches that are used in practice, and we will be exploring one of the more popular ones called k-fold cross validation.
+k-fold cross validation (the k is totally unrelated to K) involves randomly dividing the training set into k groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining k−1 folds. The misclassification rate is then computed on the observations in the held-out fold. This procedure is repeated k times; each time, a different group of observations is treated as a validation set. This process results in k estimates of the test error which are then averaged out.
+Cross-validation can be used to estimate the test error associated with a learning method in order to evaluate its performance, or to select the appropriate level of flexibility. 
+We have tested k-fold cross validation and plotted the result in the below chart
+<img src="pictures/G0.png"/>    
+10-fold cross validation tells us that K=7 results in the lowest validation error.  
 
 ## Android application
 
