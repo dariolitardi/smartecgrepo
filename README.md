@@ -28,7 +28,7 @@ The result is sent via Bluetooth to the android application that shows the BPM (
 ### The machine learning algorithm
 The Machine Learning algorithm used is KNN.
 
-How does KNN work?
+### How does KNN work?
 In the classification setting, the K-nearest neighbor algorithm essentially boils down to forming a majority vote between the K most similar instances to a given “unseen” observation. Similarity is defined according to a distance metric between two data points. A popular choice is the Euclidean distance given by
                                                   
 but other measures can be more suitable for a given setting and include the Manhattan, Chebyshev and Hamming distance.
