@@ -64,8 +64,8 @@ As stated in the article we pre-processed the data calculating the following val
 1. The average of the last ten beats  
 
 <img src="pictures/datasetcode.PNG" />  
-Trainingset  
 
+#### Trainingset
 We need these values because fibrillation is detected only when the intervals between two beats corresponding to the electrical activation of the ventricles are completely irregular without following a repetitive pattern.
 
 The choice to use the KNN is due to the excellent results obtained by its executions during the testing phase. We compared different machine learning algorithms writing a script in Python (available at this [link](py/script.py)) It uses the [scikit-learn library](http://scikit-learn.org/stable/index.html). 
@@ -86,11 +86,7 @@ Below is a list of all the machine learning algorithms tested with the results o
 Chart of the comparison between the accuracies of the tested algorithms  
 
 As we can see from the graph, the KNN achieves the best results.  
-The accuracy of prediction is always between 94% and 97%.  
-
-<img src="pictures/knn_correctness.png" width="500" />
-
-The image shows an execution of the training set, and where the algorithm predicts correctly the fibrillation.
+The accuracy of prediction is always between 94% and 97%.
 
 ## Code
 * [STM Nucleo-F401RE Board](./Nucleo)  
@@ -102,11 +98,13 @@ The image shows an execution of the training set, and where the algorithm predic
 The [starting dataset](py/dataset.txt) consists of over 3000 instances, but the Nucleo board is a microcontroller and is not designed to run machine learning algorithms, it was therefore necessary to reduce the number of instances, a large number in fact significantly reduces performance. The need for good performance is given by the fact that in case of fibrillation the interval between two beats can be very short and an execution time too long may not be enough to determine the result correctly. After making a fair number of attempts with datasets of different sizes, the choice of 300 instances seemed a good compromise between having good performance without going to affect the correctness of the result, whose success rate remains very high.
 
 ### Validation
-A smart approach involves estimating the test error rate by holding out a subset of the training set from the fitting process. This subset, called the validation set, can be used to select the appropriate level of flexibility of our algorithm. There are different validation approaches that are used in practice, and we will be exploring one of the more popular ones called k-fold cross validation.
-**k-fold cross validation** (the k is totally unrelated to K) involves randomly dividing the training set into k groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining k−1 folds. The misclassification rate is then computed on the observations in the held-out fold. This procedure is repeated k times; each time, a different group of observations is treated as a validation set. This process results in k estimates of the test error which are then averaged out.
+A smart approach involves estimating the test error rate by holding out a subset of the training set from the fitting process. This subset, called the validation set, can be used to select the appropriate level of flexibility of our algorithm. There are different validation approaches that are used in practice, we used the k-fold cross validation.  
+**k-fold cross validation** (the k is totally unrelated to K of the KNN) involves randomly dividing the training set into k groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining k−1 folds. The misclassification rate is then computed on the observations in the held-out fold. This procedure is repeated k times; each time, a different group of observations is treated as a validation set. This process results in k estimates of the test error which are then averaged out.
 Cross-validation can be used to estimate the test error associated with a learning method in order to evaluate its performance, or to select the appropriate level of flexibility. 
-We have tested k-fold cross validation and plotted the result in the below chart
-<img src="pictures/G0.png"/>    
+We have tested k-fold cross validation and plotted the result in the chart below.  
+
+<img src="pictures/G0.png"/>
+
 10-fold cross validation tells us that K=1 results in the lowest validation error.  
 
 ## Android application
