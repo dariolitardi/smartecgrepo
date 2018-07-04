@@ -129,6 +129,15 @@ For this motivations we can establish the KNN implementation on the STM32 board 
 In order to compile the code for the Nucleo Board you have to add STM32 boards support to Arduino IDE.  
 You can find the tutorial at this link: https://github.com/stm32duino/wiki/wiki/Getting-Started
 
+## Video demonstrations
+1. [Simulation of the atrial fibrillation](https://www.youtube.com/watch?v=Bsk9MxrTc6Y)  
+1. [State of rest](https://www.youtube.com/watch?v=YJYAtLwRzp4)  
+1. [Running test](https://www.youtube.com/watch?v=_6s1PGl-Tb8)  
+
+<img src="pictures/battery used.jpg" height="300" />
+Battery used to do the tests.
+
+
 ## Links
 
 ### Presentation on Slideshare  
