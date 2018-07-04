@@ -105,7 +105,13 @@ We have tested k-fold cross validation and plotted the result in the chart below
 
 <img src="pictures/G0.png"/>
 
-10-fold cross validation tells us that K=1 results in the lowest validation error.  
+10-fold cross validation tells us that K=1 results in the lowest validation error.   
+
+## Correctness
+We have tested the KNN algorithm on several platforms and programming languages, like Java with Weka library on the Android smartphone, C++ on STM32 board and Python, for demonstrating the correctness of our implementation.   
+We have started from a unique and traditional dataset (https://archive.ics.uci.edu/ml/datasets/iris) and then we have compared the accuracies of every implementation applying the KNN algorithm to this dataset.   
+The obtained result is that each implementation returns an accuracy approximately of the 97%.
+For this motivations we can establish the KNN implementation on the STM32 board is correct and reliable.
 
 ## Android application
 
