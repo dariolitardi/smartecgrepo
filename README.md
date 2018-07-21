@@ -100,7 +100,7 @@ For this motivations we can establish the KNN implementation on the STM32 board 
 
 ## Performance
 
-We have tested KNN algorithm's performance in two way: first of all comparing the run times of the classification in milliseconds with the number of the instances of the dataset within STM32 board, then in a second moment fixing an high number of instances (2000) we have compared the run times between several platforms like STM32 board, Android application on the smartphone and Python in our pc. 
+We have tested KNN algorithm's performance in two way. First of all we have compared the run times of the classification in milliseconds with the number of the instances of the dataset within STM32 board. Then in a second moment fixing an high number of instances (2000) we have compared the run times of the classification between several platforms like STM32 board, Android application on the smartphone and Python in our pc. 
 
 In the below graph, we report the first test: the run times in milliseconds varying the number of the instances.
 <img src="pictures/stm32_times.png"  width="650"  height="400"/>  
