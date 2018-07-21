@@ -62,6 +62,7 @@ As stated in the article we pre-processed the data calculating the following val
 1. The second to last beat
 1. The third to last beat
 1. The average of the last ten beats  
+1. The result of the target function (1 in case of fibrillation, else 0)
 
 <img src="pictures/datasetcode.PNG" />  
 
