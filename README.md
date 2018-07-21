@@ -100,17 +100,20 @@ For this motivations we can establish the KNN implementation on the STM32 board 
 
 ## Performance
 
-We have tested KNN algorithm's performance in two way: firstofall comparing the run times in milliseconds with the number of the instances of the dataset within STM32 board, then in a second moment fixing an high number of instances (2000) we have compared the run times between several platforms like STM32 board, Android application on the smartphone and Python in our pc. 
+We have tested KNN algorithm's performance in two way: first of all comparing the run times in milliseconds with the number of the instances of the dataset within STM32 board, then in a second moment fixing an high number of instances (2000) we have compared the run times between several platforms like STM32 board, Android application on the smartphone and Python in our pc. 
 
 In the below graph, we report the first test: the run times in milliseconds varying the number of the instances.
 <img src="pictures/stm32_times.png"  width="650"  height="400"/>  
 
-The results of the second test are displayed in the chart below: the run times in milliseconds changing the hardware platform.
+The results of the second test are displayed in the chart below: the run times in milliseconds changing the hardware platform. In this case the fixed number of the instances of the dataset is 2000. 
 
 <img src="pictures/platforms_times.PNG"  width="600"  height="500"/>  
 
+From the first test we can conclude that there is a direct proportionality: increasing the number of the instances, the run time augments.
+From the second test we can consider that the run time within the STM32 board is far slower than the Android app and the Python implementation on pc. 
+
 ### Limitations
- 
+
 
 ### Validation
 A smart approach involves estimating the test error rate by holding out a subset of the training set from the fitting process. This subset, called the validation set, can be used to select the appropriate level of flexibility of our algorithm. There are different validation approaches that are used in practice, we used the k-fold cross validation.  
