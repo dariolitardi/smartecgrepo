@@ -55,24 +55,38 @@ The dataset we used has been preprocessed according to the procedures described 
 
 *Mar, T., Zaunseder, S., Martinnez, J. P., Llamedo, M., & Poll, R. (August 01, 2011). Optimization of ECG Classification by Means of Feature Selection. Ieee Transactions on Biomedical Engineering, 58, 8, 2168-2177.*
 
-As stated in the article we pre-processed the data calculating the following values:
+As stated in the article every instance is represented by a vector of five values, each with a class label. 
+
+The values of the input vector:
 
 1. The average of the last three beats
 1. The last beat
 1. The second to last beat
 1. The third to last beat
 1. The average of the last ten beats  
-1. The result of the target function (1 in case of fibrillation, else 0)
 
-<img src="pictures/datasetcode.PNG" />   
+The class label:  
+1 in case in fibrillation, 0 otherwise  
 
-<img src="pictures/targetfunction.PNG"  width="450"  height="250" />  
+The first instances of our dataset:  
 
+| Input values | Class label |
+|:---------|:------|
+| {926.6666666666666, 1132.0, 708.0, 940.0, 894.8} | 0 |
+| {418.6666666666667, 472.0, 404.0, 380.0, 444.4}| 1 |
+| {938.6666666666666, 928.0, 932.0, 956.0, 924.0} | 0 |
+| {685.3333333333334, 752.0, 652.0, 652.0, 707.6} | 1 |
+| {909.3333333333334, 892.0, 916.0, 920.0, 892.0} | 0 |
+| {838.6666666666666, 828.0, 840.0, 848.0, 841.2} | 0 |
+| {881.3333333333334, 872.0, 884.0, 888.0, 882.8} | 0 |
+| {593.3333333333334, 748.0, 472.0, 560.0, 538.8} | 1 |
+
+In the SMT32 board, to classify a new instance we evaluate the input values and then the KNN returns the class label.
 
 #### Trainingset
 We need these values because fibrillation is detected only when the intervals between two beats corresponding to the electrical activation of the ventricles are completely irregular without following a repetitive pattern.
 
-The choice to use the KNN is due to the excellent results obtained by its executions during the testing phase. We compared different machine learning algorithms writing a script in Python (available at this [link](py/script.py)) It uses the [scikit-learn library](http://scikit-learn.org/stable/index.html). 
+The choice to use the KNN is due to the excellent accuracy compared to others machine learning algorithm. We compared different machine learning algorithms writing a script in Python (available at this [link](py/script.py)) It uses the [scikit-learn library](http://scikit-learn.org/stable/index.html). 
 
 Below is a list of all the machine learning algorithms tested with the results obtained:
 
