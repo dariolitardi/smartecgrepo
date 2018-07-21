@@ -155,9 +155,11 @@ We have tested k-fold cross validation and plotted the result in the chart below
 **Connection to a bluetooth device**  
 <img src="pictures/scan_activity.png" height="300" />
 
-**The home screen shows the BPM (beats-per-minute) and sends a notification when fibrillation is detected**  
+**The home screen shows the BPM (beats-per-minute)**  
 <img src="pictures/home_activity.png" height="300" />  
 
+**The notification received when the fibrillation is detected**  
+<img src="pictures/notification.png" height="300" />  
 
 ## How to compile the code
 In order to compile the code for the Nucleo Board you have to add STM32 boards support to Arduino IDE.  
