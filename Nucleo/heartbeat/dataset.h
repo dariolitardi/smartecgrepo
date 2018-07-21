@@ -304,7 +304,7 @@ double instances[rows][columns] = {
   {344.0, 328.0, 348.0, 356.0, 394.8}
 };
 
-int classes[rows] = {  //output of the target function 
+int classes[rows] = {  //outputs of the target function 
   0,
   0,
   1,
