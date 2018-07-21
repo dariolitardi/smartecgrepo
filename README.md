@@ -66,7 +66,7 @@ As stated in the article we pre-processed the data calculating the following val
 
 <img src="pictures/datasetcode.PNG" />   
 
-<img src="pictures/targetfunction.PNG" />  
+<img src="pictures/targetfunction.PNG"  width="450"  height="250" />  
 
 
 #### Trainingset
