@@ -64,7 +64,10 @@ As stated in the article we pre-processed the data calculating the following val
 1. The average of the last ten beats  
 1. The result of the target function (1 in case of fibrillation, else 0)
 
-<img src="pictures/datasetcode.PNG" />  
+<img src="pictures/datasetcode.PNG" />   
+
+<img src="pictures/targetfunction.PNG" />  
+
 
 #### Trainingset
 We need these values because fibrillation is detected only when the intervals between two beats corresponding to the electrical activation of the ventricles are completely irregular without following a repetitive pattern.
