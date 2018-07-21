@@ -100,11 +100,17 @@ For this motivations we can establish the KNN implementation on the STM32 board 
 
 ## Performance
 
+We have tested KNN algorithm's performance in two way: firstofall comparing the run times in milliseconds with the number of the instances of the dataset within STM32 board, then in a second moment fixing an high number of instances (2000) we have compared the run times between several platforms like STM32 board, Android application on the smartphone and Python in our pc. 
+
+In the below graph, we report the first test: the run times in milliseconds varying the number of the instances.
+<img src="pictures/stm32_times.png"  width="650"  height="400"/>  
+
+The results of the second test are displayed in the chart below: the run times in milliseconds changing the hardware platform.
+
+<img src="pictures/platforms_times.PNG"  width="600"  height="500"/>  
+
 ### Limitations
-The [starting dataset](py/dataset.txt) consists of over 3000 instances, but the Nucleo board is a microcontroller and is not designed to run machine learning algorithms, it was therefore necessary to reduce the number of instances, a large number in fact significantly reduces performance. The need for good performance is given by the fact that in case of fibrillation the interval between two beats can be very short and an execution time too long may not be enough to determine the result correctly. After making a fair number of attempts with datasets of different sizes, the choice of 300 instances seemed a good compromise between having good performance without going to affect the correctness of the result, whose success rate remains very high.
-
-<img src="pictures/smt32_times.png" />  
-
+ 
 
 ### Validation
 A smart approach involves estimating the test error rate by holding out a subset of the training set from the fitting process. This subset, called the validation set, can be used to select the appropriate level of flexibility of our algorithm. There are different validation approaches that are used in practice, we used the k-fold cross validation.  
