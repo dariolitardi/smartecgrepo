@@ -70,7 +70,7 @@ The class label:
 
 The first instances of our dataset:  
 
-| Input values | Class label |
+| Input vector | Class label |
 |:---------|:------|
 | {926.6666666666666, 1132.0, 708.0, 940.0, 894.8} | 0 |
 | {418.6666666666667, 472.0, 404.0, 380.0, 444.4}| 1 |
@@ -111,31 +111,30 @@ The accuracy of prediction is always between 94% and 97%.
 * [Android application](./Android)  
 
 ## Correctness
-We have tested the KNN algorithm on several platforms and programming languages, like Java with Weka library on the Android smartphone, C++ on STM32 board and Python, for demonstrating the correctness of our implementation.   
-We have started from a unique and traditional dataset (https://archive.ics.uci.edu/ml/datasets/iris) and then we have compared the accuracies of every implementation applying the KNN algorithm to this dataset.   
-The obtained result is that each implementation returns an accuracy approximately of the 97%.
-For this motivations we can establish the KNN implementation on the STM32 board is correct and reliable.
+We tested the KNN algorithm on several platforms and programming languages, such as Java with Weka library on the Android smartphone, C++ on STM32 board and Python, for demonstrating the correctness of our implementation.
+We started from a unique and traditional dataset (https://archive.ics.uci.edu/ml/datasets/iris) and then we compared the accuracies of every implementation applying the KNN algorithm to this dataset.
+The obtained result is that each implementation returns an accuracy approximately of the 97%. For this reason we can assert that the KNN implementation on the STM32 board is correct and reliable.
 
 ## Performance
 
-We have tested the KNN algorithm's performance in two way. First of all we have compared the run times of the classification in milliseconds with the number of the instances of the dataset within STM32 board. Then in a second moment fixing an high number of instances (2000) we have compared the run times of the classification between several platforms like STM32 board, Android application on the smartphone and Python in our pc. 
+We tested the KNN algorithm's performance in two ways. First of all we compared the execution times of the classification in milliseconds with the number of the instances of the dataset within STM32 board. At a later stage, we compared, using a fixed number of instances (2000), the execution times of the classification in several platforms such as STM32 board, Android application on the smartphone and Python on our pc. 
 
-In the below graph, we report the first test: the run times in milliseconds varying the number of the instances.
+In the graph below we reported the first test: the execution times in milliseconds varying the number of the instances.  
 <img src="pictures/stm32_times.png"  width="650"  height="400"/>  
 
 The results of the second test are displayed in the chart below: the run times in milliseconds changing the hardware platform. In this case the fixed number of the instances of the dataset is 2000. 
 
 <img src="pictures/platforms_times.PNG"  width="600"  height="500"/>  
 
-From the first test we can conclude that there is a direct proportionality: increasing the number of the instances, the run time augments.   
+From the first test we can conclude that there is a direct proportionality between the number of the instances and the execution time. When the first one increases the latter increases as well.   
 From the second test we can consider that the run time corresponding to a high and fixed number of the instances (2000) within the STM32 board is far slower than the Android app and the Python implementation on pc. 
 
 ### Limitations
 
-After we tested the computational performances, we have analyzed the limitations of the performances on the STM32 board.   
-About the space in memory, we have obtained that with 2500 instances STM32 throws an exception on the memory: "Low memory available, stability problems may occure". Because of this result we can use at most 2000 instances in the dataset for the KNN algorithm.   
-Furthermore the algorithm with 2500 instances is very slow: after five minutes it doesn't return an output.   
-We have also tested if there are limitations of the knn algorithm implemented both in Android application and Python on pc. There are no limit of space and run time in these two platform: with the complete dataset of 3337 instances, in Android the algorithm employs for the classification 90 milliseconds and in Python 43 milliseconds.
+After we tested the computational performances, we analyzed the limitations of the performances on the STM32 board.
+Regarding the space in memory, we obtained that with 2500 instances the Arduino IDE shows a warning at compile time: "Low memory available, stability problems may occur". Because of this issue we can use at most 2000 instances in the dataset for the KNN algorithm.  
+Furthermore the algorithm with 2500 instances is very slow: after five minutes it doesn't return an output.  
+We tested if there are limitations of the KNN algorithm implemented both in Android application and Python on pc. There are no limitations of space and times in these two platform: with the complete dataset of 3337 instances, in Android the algorithm takes for the classification approximately 90 milliseconds and in Python approximately 43 milliseconds.
 
 ### Validation
 A smart approach involves estimating the test error rate by holding out a subset of the training set from the fitting process. This subset, called the validation set, can be used to select the appropriate level of flexibility of our algorithm. There are different validation approaches that are used in practice, we used the k-fold cross validation.  
