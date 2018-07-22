@@ -5,12 +5,18 @@
 #define INFO 2
 #define OFF 3
 
+/*
+   Print function
+*/
 void printSignal() {
   if (!log(TRACE)) return;
 
   Serial.println(Signal);
 }
 
+/*
+   Print function
+*/
 void printThreshold(int threshold, int meanMin, int meanMax) {
   if (!log(INFO)) return;
 
@@ -23,6 +29,9 @@ void printThreshold(int threshold, int meanMin, int meanMax) {
   Serial.println(")");
 }
 
+/*
+   Print function
+*/
 void printSensorError(int meanMin, int meanMax) {
   if (!log(INFO)) return;
 
@@ -33,6 +42,9 @@ void printSensorError(int meanMin, int meanMax) {
   Serial.println(")");
 }
 
+/*
+   Print function
+*/
 void printHeartBeat() {
   if (!log(DEBUG)) return;
 
@@ -43,6 +55,9 @@ void printHeartBeat() {
   n++;
 }
 
+/*
+   Print function
+*/
 void printIBIs(short lastIBI, short secondToLastIBI, short thirdToLastIBI) {
   if (!log(OFF)) return;
 
@@ -55,6 +70,9 @@ void printIBIs(short lastIBI, short secondToLastIBI, short thirdToLastIBI) {
   Serial.println(thirdToLastIBI);
 }
 
+/*
+   Print function
+*/
 void printDiscardedIBI(short IBI) {
   if (!log(DEBUG)) return;
 
@@ -62,6 +80,9 @@ void printDiscardedIBI(short IBI) {
   Serial.println(IBI);
 }
 
+/*
+   Print function
+*/
 void printMeanOfLast3(short meanOfLast3) {
   if (!log(OFF)) return;
 
@@ -69,6 +90,9 @@ void printMeanOfLast3(short meanOfLast3) {
   Serial.println(meanOfLast3);
 }
 
+/*
+   Print function
+*/
 void printMeanOfLast10(short meanOfLast10) {
   if (!log(OFF)) return;
 
@@ -76,6 +100,9 @@ void printMeanOfLast10(short meanOfLast10) {
   Serial.println(meanOfLast10);
 }
 
+/*
+   Print function
+*/
 void printIBIs() {
   if (!log(DEBUG)) return;
 
@@ -98,9 +125,12 @@ void printIBIs() {
   Serial.println();
 }
 
+/*
+   Print function
+*/
 void printFibrillation(int fibrillation) {
   if (!log(OFF)) return;
-  
+
   if (fibrillation) {
     Serial.println("FIBRILLATION");
   } else {
