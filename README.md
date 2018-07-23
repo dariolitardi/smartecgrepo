@@ -138,14 +138,14 @@ We tested if there are limitations of the KNN algorithm implemented both in Andr
 
 ### Accuracy
 
-For the choice of the platform, we have tested the KNN algorithm on the STM board, Android app on the smartphone and Python on pc, comparing the accuracies of these implementations. 
+For the choice of the platform, we tested the KNN algorithm on the STM32 board, Android app on the smartphone and Python on pc, comparing the accuracies of these implementations. 
 In the chart below we show that STM32 returns the best accuracy (100%). These accuracies have been obtained with 300 instances in the dataset.   
 
 <img src="pictures/accuracies.PNG"  width="600"  height="450"/>
 
-Furthermore, we have obtained these accuracies:
+Furthermore, we obtained these accuracies:
 
-1. 97% in Android with 3340 instances (the complete dataset);  
+1. 97% on Android with 3337 instances (the complete dataset);  
 1. 94% on STM32 with 100 instances;
 
 Comparing these results, the chart above and the performances, the best choice is the implementation on the STM32 board using 300 instances in the dataset.
