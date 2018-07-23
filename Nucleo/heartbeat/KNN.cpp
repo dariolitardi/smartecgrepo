@@ -2,13 +2,25 @@
 #include <math.h>
 
 // calculate the class of a set of attributes using KNN
-int performKNN(double *data, int classesNum[], double d[], int k, int rows, int columns) {
-  double temp2[rows], firstK[k];
-  int classes[rows];
-  int kClasses[k];
 
+/*
+	data = training set
+	classesNum = traing set output
+	d = testing value 
+	k = number of k
+	rows, columns = number of row and columns of training set 
+*/
+int performKNN(double *data, int classesNum[], double d[], int k, int rows, int columns) {
+  double temp2[rows]; //data distance sorted for extracting the first k
+  double firstK[k]; //first k near to data
+  int classes[rows]; // temporal copy of classesNum used for sort temp2
+  int kClasses[k]; //first k near to data (the output classes)
+
+  //calculate the ecludean distance of d from the database
   euclideanDistanceFromDatabase(d, temp2, (double*)data, rows, columns);
+  //sort distances Ascending
   sort(temp2, classes, classesNum, rows);
+  //calculate the k near
   extractFirstN(temp2, firstK, classes, kClasses, k);
 
   // calculate Fashion
@@ -102,6 +114,11 @@ double euclideanDistance(double pt1[], double pt2[], int columns) {
 }
 
 // calculate Euclidean distance between a point and the database
+ /*
+	pt1 = testing value (d value)
+	temp = temporal value with distance
+	instances = training dataset
+ */
 void euclideanDistanceFromDatabase(double pt1[], double temp[], double *instances, int rows, int columns) {
   int i = 0, j = 0;
   double pt2[columns];
@@ -115,6 +132,11 @@ void euclideanDistanceFromDatabase(double pt1[], double temp[], double *instance
 }
 
 // sort distances Ascending
+/*
+	data = data to sort (temp2)
+	classes = copy of the original classes target
+	classesNo = training set target
+*/
 void sort(double data[], int classes[], int classesNo[], int rows) {
   int i = 1, j = 1, f = 1, temp[2];
 

@@ -38,7 +38,7 @@ import sklearn.model_selection
 Xtrn, Xtst, ytrn, ytst = sklearn.model_selection.train_test_split(X, y, test_size=0.25)
 
 from sklearn.neighbors import KNeighborsClassifier
-knn = KNeighborsClassifier(n_neighbors=5)
+knn = KNeighborsClassifier(n_neighbors=1)
 knn.fit(Xtrn, ytrn)
 print("knn " + str(knn.score(Xtst, ytst)) )
 
