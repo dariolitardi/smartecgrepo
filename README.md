@@ -134,7 +134,21 @@ From the second test we can consider that the run time corresponding to a high a
 After we tested the computational performances, we analyzed the limitations of the performances on the STM32 board.
 Regarding the space in memory, we obtained that with 2500 instances the Arduino IDE shows a warning at compile time: "Low memory available, stability problems may occur". Because of this issue we can use at most 2000 instances in the dataset for the KNN algorithm.  
 Furthermore the algorithm with 2500 instances is very slow: after five minutes it doesn't return an output.  
-We tested if there are limitations of the KNN algorithm implemented both in Android application and Python on pc. There are no limitations of space and times in these two platform: with the complete dataset of 3337 instances, in Android the algorithm takes for the classification approximately 90 milliseconds and in Python approximately 43 milliseconds.
+We tested if there are limitations of the KNN algorithm implemented both in Android application and Python on pc. There are no limitations of space and times in these two platform: with the complete dataset of 3337 instances, in Android the algorithm takes for the classification approximately 90 milliseconds and in Python approximately 43 milliseconds.   
+
+### Accuracy
+
+For the choice of the platform, we have tested the KNN algorithm on the STM board, Android app on the smartphone and Python on pc, comparing the accuracies of these implementations. 
+In the chart below we show that STM32 returns the best accuracy (100%). These accuracies have been obtained with 300 instances in the dataset.   
+
+<img src="pictures/accuracies.PNG"  width="600"  height="450"/>
+
+Furthermore, we have obtained these accuracies:
+
+1. 97% in Android with 3340 instances (the complete dataset);  
+1. 94% on STM32 with 100 instances;
+
+Comparing these results, the chart above and the performances, the best choice is the implementation on the STM32 board using 300 instances in the dataset.
 
 ### Validation
 A smart approach involves estimating the test error rate by holding out a subset of the training set from the fitting process. This subset, called the validation set, can be used to select the appropriate level of flexibility of our algorithm. There are different validation approaches that are used in practice, we used the k-fold cross validation.  
