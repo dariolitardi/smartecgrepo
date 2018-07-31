@@ -146,7 +146,7 @@ For the choice of the platform, we tested the KNN algorithm on the STM32 board, 
 
 Comparison between the accuracy and the number of the instances valid in every platform
 
-We can notice that increasing the number of the instances, the accuracy augments.  
+We can notice that increasing the number of the instances, the accuracy increases as well.  
 
 **Comparing the accuracies and the performances, the best choice is the implementation on the STM32 board using 300 instances in the dataset.**
 
