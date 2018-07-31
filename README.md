@@ -140,17 +140,15 @@ We tested if there are limitations of the KNN algorithm implemented both in Andr
 
 ### Accuracy
 
-For the choice of the platform, we tested the KNN algorithm on the STM32 board, Android app on the smartphone and Python on pc, comparing the accuracies of these implementations. 
-In the chart below we show that STM32 returns the best accuracy (100%). These accuracies have been obtained with 300 instances in the dataset.   
+For the choice of the platform, we tested the KNN algorithm on the STM32 board, Android app on the smartphone and Python on pc, comparing the accuracies of these implementations. Because of the correctness of these implementation, the accuracies for each number of the instances are equivalent for each platform (Android, STM32, Python). We report the result in the chart below.   
 
 <img src="pictures/accuracy.PNG"  width="600"  height="450"/>
+Comparison between the accuracy and the number of the instances     
+    
+We can notice that increasing the number of the instances, the accuracy augments.
 
-Furthermore, we obtained these accuracies:
 
-1. 97% on Android with 3337 instances (the complete dataset);  
-1. 94% on STM32 with 100 instances;
-
-Comparing these results, the chart above and the performances, the best choice is the implementation on the STM32 board using 300 instances in the dataset.
+##### Comparing the accuracies and the performances, the best choice is the implementation on the STM32 board using 300 instances in the dataset.
 
 ### Validation
 A smart approach involves estimating the test error rate by holding out a subset of the training set from the fitting process. This subset, called the validation set, can be used to select the appropriate level of flexibility of our algorithm. There are different validation approaches that are used in practice, we used the k-fold cross validation.  
