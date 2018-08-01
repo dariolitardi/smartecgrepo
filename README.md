@@ -120,7 +120,7 @@ The obtained result is that each implementation returns an accuracy approximatel
 We tested the KNN algorithm's performance in two ways. First of all we compared the execution times of the classification in milliseconds with the number of the instances of the dataset within STM32 board. At a later stage, we compared, using a fixed number of instances (2000), the execution times of the classification in several platforms such as STM32 board, Android application on the smartphone and Python on our pc. 
 
 In the graph below we reported the first test: the execution times in milliseconds varying the number of the instances.  
-<img src="pictures/stm32_runtimes.PNG"  width="650"  height="400"/>   
+<img src="pictures/stm32_times.PNG"  width="650"  height="400"/>   
 Comparison between the number of the instances and the execution times on STM32 board.
      
     
