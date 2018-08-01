@@ -134,8 +134,8 @@ From the second test we can consider that the execution time corresponding to a 
 ### Limitations
 
 After we tested the computational performances, we analyzed the limitations of the performances on the STM32 board.
-Regarding the space in memory, we obtained that with 2500 instances the Arduino IDE shows a warning at compile time: "Low memory available, stability problems may occur". Because of this issue we can use at most 2000 instances in the dataset for the KNN algorithm.  
-Furthermore the algorithm with 2500 instances is very slow: after five minutes it doesn't return an output.  
+Regarding the space in memory, we obtained that with 2200 instances the Arduino IDE shows a warning at compile time: "Low memory available, stability problems may occur". Because of this issue we can use at most 2000 instances in the dataset for the KNN algorithm.  
+Furthermore the algorithm with 2200 instances is very slow: after five minutes it doesn't return an output.  
 We tested if there are limitations of the KNN algorithm implemented both in Android application and Python on pc. There are no limitations of space and times in these two platform: with the complete dataset of 3337 instances, in Android the algorithm takes for the classification approximately 90 milliseconds and in Python approximately 43 milliseconds.   
 
 ### Accuracy
