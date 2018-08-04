@@ -133,9 +133,11 @@ From the second test we can consider that the execution time corresponding to a 
 
 ### Limitations
 
-We tested the possible limitations of our implementation on the STM32 board. The premise is that fibrillation is characterized by rapid and irregular beats, the application to detect heart beats must calculate at least two beats per second, on average when you run you can reach 120 beats per minute (2 beats per second, ie 1 beat every 500 ms). This means that the entire execution time that is the time from when a beat is detected until when that data is sent via Bluetooth, must be less than half a second. In our test, we obtained that with 300 instances the execution time of an entire application execution is less than half a second, in fact the next value, 400 instances has an execution time greater than 500 ms. This result is shown in the following graph.
+We tested the possible limitations of our implementation on the STM32 board. The premise is that fibrillation is characterized by rapid and irregular beats, the application to detect heart beats must calculate at least two beats per second, on average when you run you can reach 120 beats per minute (2 beats per second, ie 1 beat every 500 ms). This means that the entire execution time that is the time from when a beat is detected until when the data is sent via Bluetooth, must be less than half a second. In our test, we obtained that with 300 instances the execution time of an entire application execution is less than half a second, in fact the next value, 400 instances has an execution time greater than 500 ms. This result is shown in the following graph.
 
 <img src="pictures/graph_execution_times_2.png"/>
+
+This result indicates that the most relevance limitation is low computational performance of the STM32 board due to a low CPU frequency (84 Mhz).
 
 ### Accuracy
 
