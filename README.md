@@ -142,7 +142,7 @@ Regarding the space in memory, we obtained that with 2100 instances the Arduino 
 
 For the choice of the platform, we tested the KNN algorithm on the STM32 board, Android app on the smartphone and Python on pc, comparing the accuracies of these implementations. Because of the correctness of these implementations, the accuracies for each number of the instances are equivalent in every platform (Android, STM32, Python). We report the result in the chart below.   
 
-<img src="pictures/accuracy.PNG"  width="600"  height="450"/>
+<img src="pictures/graph_accuracy.png"/>
 
 Comparison between the accuracy and the number of the instances valid in every platform
 
