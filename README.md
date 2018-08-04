@@ -120,7 +120,7 @@ The obtained result is that each implementation returns an accuracy approximatel
 We tested the KNN algorithm's performance in two ways. First of all we compared the execution times of the classification in milliseconds with the number of the instances of the dataset within STM32 board. At a later stage, we compared, using a fixed number of instances (2000), the execution times of the classification in several platforms such as STM32 board, Android application on the smartphone and Python on our pc. 
 
 In the graph below we reported the first test: the execution times in milliseconds varying the number of the instances.  
-<img src="pictures/stm32_times.PNG"  width="650"  height="400"/>   
+<img src="pictures/graph_execution_times_1.png"/>   
 Comparison between the number of the instances and the execution times of the classification of a new instance on STM32 board.
      
     
@@ -136,7 +136,7 @@ From the second test we can consider that the execution time corresponding to a 
 The graph above shows execution times from the time a beat is detected to the time data is sent via Bluetooth. You may notice that when the number of instances is greater than 300, execution times increase significantly. In addition, with 300 instances, the accuracy is 94.7%, slightly lower than that achieved with a higher number of instances (for example, with 900 instances, the accuracy is only 0.3% better). Taking into account that fibrillation is characterized by rapid beats, the board must be able to return the results in a short time. For these reasons, we believe that, to maintain good performance, without having to renounce to the accuracy of the results, the optimal number of instances to use is 300.
 After we tested the computational performances, we analyzed the limitations of the performances on the STM32 board.
 Regarding the space in memory, we obtained that with 2100 instances the Arduino IDE shows a warning at compile time: "Low memory available, stability problems may occur". Because of this issue we can use at most 2000 instances in the dataset for the KNN algorithm.  
-<img src="pictures/totalruntimes.PNG"  width="630"  height="450"/>
+<img src="pictures/graph_execution_times_2.png"/>
 
 ### Accuracy
 
