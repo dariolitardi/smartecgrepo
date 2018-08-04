@@ -10,14 +10,14 @@
 	k = number of k
 	rows, columns = number of row and columns of training set 
 */
-int performKNN(double *data, int classesNum[], double d[], int k, int rows, int columns) {
-  double temp2[rows]; //data distance sorted for extracting the first k
-  double firstK[k]; //first k near to data
+int performKNN(float *data, int classesNum[], float d[], int k, int rows, int columns) {
+  float temp2[rows]; //data distance sorted for extracting the first k
+  float firstK[k]; //first k near to data
   int classes[rows]; // temporal copy of classesNum used for sort temp2
   int kClasses[k]; //first k near to data (the output classes)
 
   //calculate the ecludean distance of d from the database
-  euclideanDistanceFromDatabase(d, temp2, (double*)data, rows, columns);
+  euclideanDistanceFromDatabase(d, temp2, (float*)data, rows, columns);
   //sort distances Ascending
   sort(temp2, classes, classesNum, rows);
   //calculate the k near
@@ -94,7 +94,7 @@ int mostFrequentClass(int classes[], int k) {
 }
 
 // extract the first N
-void extractFirstN(double data[], double firstK[], int classes[], int kClasses[], int k) {
+void extractFirstN(float data[], float firstK[], int classes[], int kClasses[], int k) {
   for (int i = 0; i < k; i++) {
     firstK[i] = data[i];
     kClasses[i] = classes[i];
@@ -102,9 +102,9 @@ void extractFirstN(double data[], double firstK[], int classes[], int kClasses[]
 }
 
 // calculate Euclidean distance between two points
-double euclideanDistance(double pt1[], double pt2[], int columns) {
+float euclideanDistance(float pt1[], float pt2[], int columns) {
   int i;
-  double sum = 0;
+  float sum = 0;
 
   for (i = 0; i < columns; i++) {
     sum = pow(pt1[i] - pt2[i], 2) + sum;
@@ -119,9 +119,9 @@ double euclideanDistance(double pt1[], double pt2[], int columns) {
 	temp = temporal value with distance
 	instances = training dataset
  */
-void euclideanDistanceFromDatabase(double pt1[], double temp[], double *instances, int rows, int columns) {
+void euclideanDistanceFromDatabase(float pt1[], float temp[], float *instances, int rows, int columns) {
   int i = 0, j = 0;
-  double pt2[columns];
+  float pt2[columns];
 
   for (i = 0; i < rows; i++) {
     for (j = 0; j < columns; j++) {
@@ -137,7 +137,7 @@ void euclideanDistanceFromDatabase(double pt1[], double temp[], double *instance
 	classes = copy of the original classes target
 	classesNo = training set target
 */
-void sort(double data[], int classes[], int classesNo[], int rows) {
+void sort(float data[], int classes[], int classesNo[], int rows) {
   int i = 1, j = 1, f = 1, temp[2];
 
   // create a copy of the original classes

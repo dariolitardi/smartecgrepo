@@ -1,7 +1,7 @@
 const int rows = 300; // number of instances
 const int columns = 5; // number of attributes
 
-double instances[rows][columns] = {
+float instances[rows][columns] = {
   {916.0, 912.0, 924.0, 912.0, 918.8},
   {926.6666667, 1132.0, 708.0, 940.0, 894.8},
   {418.6666667, 472.0, 404.0, 380.0, 444.4},

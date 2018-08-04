@@ -416,10 +416,10 @@ void checkFibrillation() {
   }
 
   //create an array of the five values required to check fibrillation and perform KNN
-  double hb[columns] = {meanOfLast3, lastIBI, secondToLastIBI, thirdToLastIBI, meanOfLast10};
+  float hb[columns] = {meanOfLast3, lastIBI, secondToLastIBI, thirdToLastIBI, meanOfLast10};
 
   // set the fibrillation value to 1 if is the knn classified the last beat as fibrillation, otherwise is 0
-  fibrillation = performKNN((double*) instances, classes, hb, 1, rows, columns);
+  fibrillation = performKNN((float*) instances, classes, hb, 1, rows, columns);
 
   // print the result in the serial monitor (for debugging purposes)
   printFibrillation(fibrillation);
