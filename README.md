@@ -138,6 +138,8 @@ Regarding the space in memory, we obtained that with 2100 instances the Arduino 
 Furthermore the algorithm with 2100 instances is very slow: after five minutes it doesn't return an output.  
 We tested if there are limitations of the KNN algorithm implemented both in Android application and Python on pc. There are no limitations of space and times in these two platform: with the complete dataset of 3337 instances, in Android the algorithm takes for the classification approximately 90 milliseconds and in Python approximately 43 milliseconds.   
 
+<img src="pictures/totalruntimes.PNG"  width="600"  height="450"/>
+
 ### Accuracy
 
 For the choice of the platform, we tested the KNN algorithm on the STM32 board, Android app on the smartphone and Python on pc, comparing the accuracies of these implementations. Because of the correctness of these implementations, the accuracies for each number of the instances are equivalent in every platform (Android, STM32, Python). We report the result in the chart below.   
@@ -149,8 +151,6 @@ Comparison between the accuracy and the number of the instances valid in every p
 We can notice that increasing the number of the instances, the accuracy increases as well. When we reduce the number of the instances, the accuracy decreases due to overfitting and the presence of outliers.
 
 When we use the complete dataset composed by 3337 instances the accuracy on every platform is between 94% and 97%.
-
-**Comparing the accuracies and the performances, the best choice is the implementation on the STM32 board using 300 instances in the dataset.**
 
 ### Validation
 A smart approach involves estimating the test error rate by holding out a subset of the training set from the fitting process. This subset, called the validation set, can be used to select the appropriate level of flexibility of our algorithm. There are different validation approaches that are used in practice, we used the k-fold cross validation.  
