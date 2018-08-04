@@ -138,7 +138,7 @@ Regarding the space in memory, we obtained that with 2100 instances the Arduino 
 Furthermore the algorithm with 2100 instances is very slow: after five minutes it doesn't return an output.  
 We tested if there are limitations of the KNN algorithm implemented both in Android application and Python on pc. There are no limitations of space and times in these two platform: with the complete dataset of 3337 instances, in Android the algorithm takes for the classification approximately 90 milliseconds and in Python approximately 43 milliseconds.   
 
-<img src="pictures/totalruntimes.PNG"  width="600"  height="450"/>
+<img src="pictures/totalruntimes.PNG"  width="630"  height="450"/>
 
 ### Accuracy
 
