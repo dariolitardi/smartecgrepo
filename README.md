@@ -19,10 +19,10 @@ Atrial fibrillation is an abnormal heart rhythm characterized by **rapid and irr
 Figure 1
 
 ### Connections
-**STM32 Nucleo board connected to the pulse sensor and the bluetooth module**  
+
 <img src="pictures/connections.jpg" width="300" />
 
-Figure 2
+Figure 2 - **STM32 Nucleo board connected to the pulse sensor and the bluetooth module**  
 
 ## How does SmartECG work
 The STM32 Nucleo board detects heartbeats through the pulse sensor. They are pre-processed and then elaborated from a machine learning algorithm. 
@@ -53,9 +53,7 @@ The KNN algorithm can be summarized by the following steps:
 
 <img src="pictures/knn.png" width="300" />
 
-Figure 3
-
-The picture illustrates how a new data point “?” is assigned to the triangle class label based on majority voting among its k nearest neighbors. In the example K = 5.
+Figure 3 - **The picture illustrates how a new data point “?” is assigned to the triangle class label based on majority voting among its k nearest neighbors. In the example K = 5.**
 
 The dataset we used has been preprocessed according to the procedures described in the following article:
 
