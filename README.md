@@ -121,7 +121,7 @@ We tested the KNN algorithm's performance in two ways. First of all we compared 
 
 In the graph below we reported the first test: the execution times in milliseconds varying the number of the instances.  
 <img src="pictures/stm32_times.PNG"  width="650"  height="400"/>   
-Comparison between the number of the instances and the execution times on STM32 board.
+Comparison between the number of the instances and the execution times of the classification of a new instance on STM32 board.
      
     
 The results of the second test are displayed in the chart below: the execution times in milliseconds changing the hardware platform. In this case the fixed number of the instances of the dataset is 2000. 
