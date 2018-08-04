@@ -16,9 +16,13 @@ Atrial fibrillation is an abnormal heart rhythm characterized by **rapid and irr
 ### Architecture
 <img src="pictures/architecture.png" width="500" />  
 
+Figure 1
+
 ### Connections
 **STM32 Nucleo board connected to the pulse sensor and the bluetooth module**  
 <img src="pictures/connections.jpg" width="300" />
+
+Figure 2
 
 ## How does SmartECG work
 The STM32 Nucleo board detects heartbeats through the pulse sensor. They are pre-processed and then elaborated from a machine learning algorithm. 
@@ -48,6 +52,8 @@ The KNN algorithm can be summarized by the following steps:
 1. Assign the class label by majority vote. 
 
 <img src="pictures/knn.png" width="300" />
+
+Figure 3
 
 The picture illustrates how a new data point “?” is assigned to the triangle class label based on majority voting among its k nearest neighbors. In the example K = 5.
 
@@ -101,7 +107,7 @@ Below is a list of all the machine learning algorithms tested with the results o
 
 <img src="pictures/knn_results.png" width="500" />  
 
-Chart of the comparison between the accuracies of the tested algorithms  
+Figure 4 - **Chart of the comparison between the accuracies of the tested algorithms**  
 
 As we can see from the graph, the KNN achieves the best results.  
 The accuracy of prediction is always between 94% and 97%.
@@ -121,21 +127,27 @@ We tested the KNN algorithm's performance in two ways. First of all we compared 
 
 In the graph below we reported the first test: the execution times in milliseconds varying the number of the instances.  
 <img src="pictures/graph_execution_times_1.png"/>   
-Comparison between the number of the instances and the execution times of the classification of a new instance on STM32 board.
+
+Figure 5 - **Comparison between the number of instances and the execution times of the classification of a new instance on STM32 board.**
      
     
 The results of the second test are displayed in the chart below: the execution times in milliseconds changing the hardware platform. In this case the fixed number of the instances of the dataset is 2000. 
 
-<img src="pictures/platforms_times.PNG"  width="600"  height="500"/>  
+<img src="pictures/platforms_times.PNG" width="600"/>  
+
+Figure 6 - **Comparison of the run times of the classification of a new instance between the three platforms**  
 
 From the first test we can conclude that there is a direct proportionality between the number of the instances and the execution time. When the first one increases the latter increases as well.   
 From the second test we can consider that the execution time corresponding to a high and fixed number of the instances (2000) within the STM32 board is far slower than the Android app and the Python implementation on pc. 
 
 ### Limitations
 
-We tested the possible limitations of our implementation on the STM32 board. The premise is that fibrillation is characterized by rapid and irregular beats, the application to detect heart beats must calculate at least two beats per second, on average when you run you can reach 120 beats per minute (2 beats per second, ie 1 beat every 500 ms). This means that the entire execution time that is the time from when a beat is detected until when the data is sent via Bluetooth, must be less than half a second. In our test, we obtained that with 300 instances the execution time of an entire application execution is less than half a second, in fact the next value, 400 instances has an execution time greater than 500 ms. This result is shown in the following graph.
+We tested the possible limitations of our implementation on the STM32 board. The premise is that fibrillation is characterized by rapid and irregular beats, the application to detect heart beats must calculate at least two beats per second, because on average when you run you can reach 120 beats per minute (two beats per second, that is one beat every 500 ms). This means that the entire execution time, that is the time from when a beat is detected until when the data is sent via Bluetooth, must be less than half a second. In our test, we obtained that with 300 instances the execution time of an entire application execution is less than half a second, in fact the next value, 400 instances has an execution time greater than 500 ms. This result is shown in the following graph.
 
 <img src="pictures/graph_execution_times_2.png"/>
+
+Figure 7 - **Comparison between the number of instances and the execution times of the entire execution time (the time from when a beat is detected until when the data is sent via Bluetooth)**  
+
 
 This result indicates that the most relevance limitation is low computational performance of the STM32 board due to a low CPU frequency (84 Mhz).
 
@@ -143,9 +155,9 @@ This result indicates that the most relevance limitation is low computational pe
 
 For the choice of the platform, we tested the KNN algorithm on the STM32 board, Android app on the smartphone and Python on pc, comparing the accuracies of these implementations. Because of the correctness of these implementations, the accuracies for each number of the instances are equivalent in every platform (Android, STM32, Python). We report the result in the chart below.   
 
-<img src="pictures/graph_accuracy.png"/>
+<img src="pictures/graph_accuracy.png"/>  
 
-Comparison between the accuracy and the number of the instances valid in every platform
+Figure 8 - **Comparison between the accuracy and the number of the instances valid in every platform**  
 
 We can notice that increasing the number of the instances, the accuracy increases as well. When we reduce the number of the instances, the accuracy decreases due to overfitting and the presence of outliers.
 
@@ -159,21 +171,25 @@ We have tested k-fold cross validation and plotted the result in the chart below
 
 <img src="pictures/G0.png"/>
 
-10-fold cross validation tells us that K=1 results in the lowest validation error.   
+Figure 9 - 10-fold cross validation tells us that K=1 results in the lowest validation error.   
 
 ## Android application
-
-**User profile creation**  
+  
 <img src="pictures/profile_activity.png" height="300" /> 
 
-**Connection to a bluetooth device**  
+Figure 10 - **User profile creation**
+
 <img src="pictures/scan_activity.png" height="300" />
 
-**The home screen shows the BPM (beats-per-minute)**  
+Figure 11 - **Connection to a bluetooth device**  
+
 <img src="pictures/home_activity.png" height="300" />  
 
-**The notification received when the fibrillation is detected**  
+Figure 12 - **The home screen shows the BPM (beats-per-minute)**  
+
 <img src="pictures/notification.png" height="300" />  
+
+Figure 13 - **The notification received when the fibrillation is detected**  
 
 ## How to compile the code
 In order to compile the code for the Nucleo Board you have to add STM32 boards support to Arduino IDE.  
@@ -185,7 +201,8 @@ You can find the tutorial at this link: https://github.com/stm32duino/wiki/wiki/
 1. [Running test](https://www.youtube.com/watch?v=_6s1PGl-Tb8)  
 
 <img src="pictures/battery used.jpg" height="300" />
-Battery used to do the tests.
+
+Figure 14 - **Battery used to do the tests.**
 
 
 ## Links
