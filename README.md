@@ -133,7 +133,7 @@ The results of the second test are displayed in the chart below: the execution t
 
 <img src="pictures/platforms_times.PNG" width="600"/>  
 
-Figure 6 - **Comparison of the run times of the classification of a new instance between the three platforms**  
+Figure 6 - **Comparison of the execution times of the classification of a new instance between the three platforms**  
 
 From the first test we can conclude that there is a direct proportionality between the number of the instances and the execution time. When the first one increases the latter increases as well.   
 From the second test we can consider that the execution time corresponding to a high and fixed number of the instances (2000) within the STM32 board is far slower than the Android app and the Python implementation on pc. 
@@ -200,7 +200,7 @@ You can find the tutorial at this link: https://github.com/stm32duino/wiki/wiki/
 
 <img src="pictures/battery used.jpg" height="300" />
 
-Figure 14 - **Battery used to do the tests.**
+Figure 14 - **Battery used to do the tests**
 
 
 ## Links
