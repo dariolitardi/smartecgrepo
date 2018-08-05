@@ -103,7 +103,7 @@ Below is a list of all the machine learning algorithms tested with the results o
 | Logistic Regression | 0.907 |
 | Neural Network | 0.928 |  
 
-<img src="pictures/knn_results.png" width="500" />  
+<img src="pictures/algorithms_comparison.png"/>  
 
 Figure 4 - **Chart of the comparison between the accuracies of the tested algorithms**  
 
@@ -124,14 +124,14 @@ The obtained result is that each implementation returns an accuracy approximatel
 We tested the KNN algorithm's performance in two ways. First of all we compared the execution times of the classification in milliseconds with the number of the instances of the dataset within STM32 board. At a later stage, we compared, using a fixed number of instances (2000), the execution times of the classification in several platforms such as STM32 board, Android application on the smartphone and Python on our pc. 
 
 In the graph below we reported the first test: the execution times in milliseconds varying the number of the instances.  
-<img src="pictures/graph_execution_times_1.png"/>   
+<img src="pictures/performance.png"/>   
 
 Figure 5 - **Comparison between the number of instances and the execution times of the classification of a new instance on STM32 board.**
      
     
 The results of the second test are displayed in the chart below: the execution times in milliseconds changing the hardware platform. In this case the fixed number of the instances of the dataset is 2000. 
 
-<img src="pictures/platforms_times.PNG" width="600"/>  
+<img src="pictures/platforms_comparison.png" width="600"/>  
 
 Figure 6 - **Comparison of the execution times of the classification of a new instance between the three platforms**  
 
@@ -142,7 +142,7 @@ From the second test we can consider that the execution time corresponding to a 
 
 We tested the possible limitations of our implementation on the STM32 board. The premise is that fibrillation is characterized by rapid and irregular beats, the application to detect heart beats must calculate at least two beats per second, because on average when you run you can reach 120 beats per minute (two beats per second, that is one beat every 500 ms). This means that the entire execution time, that is the time from when a beat is detected until when the data is sent via Bluetooth, must be less than half a second. In our test, we obtained that with 300 instances the execution time of an entire application execution is less than half a second, in fact the next value, 400 instances has an execution time greater than 500 ms. This result is shown in the following graph.
 
-<img src="pictures/graph_execution_times_2.png"/>
+<img src="pictures/limitations.png"/>
 
 Figure 7 - **Comparison between the number of instances and the execution times of the entire execution time (the time from when a beat is detected until when the data is sent via Bluetooth)**  
 
@@ -153,7 +153,7 @@ This result indicates that the most relevance limitation is low computational pe
 
 For the choice of the platform, we tested the KNN algorithm on the STM32 board, Android app on the smartphone and Python on pc, comparing the accuracies of these implementations. Because of the correctness of these implementations, the accuracies for each number of the instances are equivalent in every platform (Android, STM32, Python). We report the result in the chart below.   
 
-<img src="pictures/graph_accuracy.png"/>  
+<img src="pictures/accuracy.png"/>  
 
 Figure 8 - **Comparison between the accuracy and the number of the instances valid in every platform**  
 
@@ -167,7 +167,7 @@ A smart approach involves estimating the test error rate by holding out a subset
 Cross-validation can be used to estimate the test error associated with a learning method in order to evaluate its performance, or to select the appropriate level of flexibility. 
 We have tested k-fold cross validation and plotted the result in the chart below.  
 
-<img src="pictures/G0.png"/>
+<img src="pictures/validation.png"/>
 
 Figure 9 - 10-fold cross validation tells us that K=1 results in the lowest validation error.   
 
