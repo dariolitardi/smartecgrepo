@@ -131,7 +131,7 @@ Figure 5 - **Comparison between the number of instances and the execution times 
     
 The results of the second test are displayed in the chart below: the execution times in milliseconds changing the hardware platform. In this case the fixed number of the instances of the dataset is 2000. 
 
-<img src="pictures/platforms_comparison.png" width="600"/>  
+<img src="pictures/platforms_comparison.png"/>  
 
 Figure 6 - **Comparison of the execution times of the classification of a new instance between the three platforms**  
 
