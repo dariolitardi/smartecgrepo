@@ -147,7 +147,7 @@ We tested the possible limitations of our implementation on the STM32 board. The
 
 Figure 7 - **Comparison between the number of instances and the execution times from when a beat is detected until when the data is sent via Bluetooth**  
 
-The execution times of with 1600 instances is very slow: after five minutes it doesn't even return an output.
+The application with 1600 instances is very slow: after five minutes it doesn't even return an output.
 
 These results indicates that the most significant limitation is low computational performance of the STM32 board due to a low CPU frequency (84 Mhz).
 
