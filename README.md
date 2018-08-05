@@ -147,7 +147,7 @@ We tested the possible limitations of our implementation on the STM32 board. The
 Figure 7 - **Comparison between the number of instances and the execution times of the entire execution time (the time from when a beat is detected until when the data is sent via Bluetooth)**  
 
 
-This result indicates that the most relevance limitation is low computational performance of the STM32 board due to a low CPU frequency (84 Mhz).
+This result indicates that the most significant limitation is low computational performance of the STM32 board due to a low CPU frequency (84 Mhz).
 
 ### Accuracy
 
@@ -169,7 +169,7 @@ We have tested k-fold cross validation and plotted the result in the chart below
 
 <img src="pictures/validation.png"/>
 
-Figure 9 - 10-fold cross validation tells us that K=1 results in the lowest validation error.   
+Figure 9 - **10-fold cross validation tells us that K=1 results in the lowest validation error**
 
 ## Android application
   
