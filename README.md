@@ -161,8 +161,6 @@ Figure 8 - **Comparison between the accuracy and the number of the instances val
 
 We can notice that increasing the number of the instances, the accuracy increases as well. When we reduce the number of the instances, the accuracy decreases due to overfitting and the presence of outliers.
 
-When we use the complete dataset composed by 3337 instances the accuracy on every platform is between 94% and 97%.
-
 ### Validation
 A smart approach involves estimating the test error rate by holding out a subset of the training set from the fitting process. This subset, called the validation set, can be used to select the appropriate level of flexibility of our algorithm. There are different validation approaches that are used in practice, we used the k-fold cross validation.  
 **k-fold cross validation** (the k is totally unrelated to K of the KNN) involves randomly dividing the training set into k groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining k−1 folds. The misclassification rate is then computed on the observations in the held-out fold. This procedure is repeated k times; each time, a different group of observations is treated as a validation set. This process results in k estimates of the test error which are then averaged out.
