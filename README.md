@@ -128,7 +128,7 @@ In the graph below we reported the first test: the execution times in millisecon
 
 Figure 5 - **Comparison between the number of instances and the execution times of the classification of a new instance on STM32 board.**
 
-The algorithm with 2100 instances is very slow: after five minutes it doesn't return an output.
+The maximum number of instances that can be handled from the classification algorithm is 2000. The algorithm with 2100 instances is very slow: after five minutes it doesn't return an output.
 
 The results of the second test are displayed in the chart below: the execution times in milliseconds changing the hardware platform. In this case the fixed number of the instances of the dataset is 2000. 
 
@@ -147,7 +147,7 @@ We tested the possible limitations of our implementation on the STM32 board. The
 
 Figure 7 - **Comparison between the number of instances and the execution times from when a beat is detected until when the data is sent via Bluetooth**  
 
-The application with 1600 instances is very slow: after five minutes it doesn't even return an output.
+The maximum number of instances that can be handled from the whole application is 1500. The application with 1600 instances is very slow: after five minutes it doesn't even return an output.
 
 These results indicates that the most significant limitation is low computational performance of the STM32 board due to a low CPU frequency (84 Mhz).
 
