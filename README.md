@@ -147,7 +147,7 @@ We tested the possible limitations of our implementation on the STM32 board. The
 
 **Figure 7 - Comparison between the number of instances and the execution times from when a beat is detected until when the data is sent via Bluetooth**  
 
-The maximum number of instances that can be handled from the whole program is 1500. The program with 1600 instances is very slow: after five minutes it doesn't even return an output. The reason is explained in more detail in the next paragraphs.
+The maximum number of instances that can be handled from the whole program is 1500. The program with 1600 instances is very slow: after five minutes it doesn't even return an output. The reason is explained in more detail below.
 
 Each instance of the dataset consists of 5 floats in input and an integer as an ouput. Floats and integers have a size of 4 bytes (32 bits), so we have (5 + 1) * 4 = 24 bytes or 192 bits.
 
