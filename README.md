@@ -163,7 +163,7 @@ In more detail, the classification algorithm is slow when about 2100 instances a
 
 **Figure 9 - Memory usage at startup (whole program)**
 
-The reason why the program is slow with a quantity of ram used well below the threshold of 75% is given by the fact that the machine learning algorithm used, the KNN, is a memory intensive algorithm that needs a lot of variables to perform the classification of new instances, variables that fills the memory.
+The reason why the program is slow with a quantity of ram used well below the threshold of 75% is given by the fact that the machine learning algorithm used, the KNN, is a memory intensive algorithm that needs a lot of variables to perform the classification of new instances, variables that fill the memory.
 
 We can conclude that the memory is a limitation, but not the most significant. These results, indeed, indicates that the most significant limitation is low computational performance of the STM32 board due to a low CPU frequency (84 Mhz). The low CPU frequency is the most significant limitation since it forces us to reduce the number of instances to 300, even though the STM32 board could handle a larger number of instances. In other words, if the CPU was more efficient it would be possible to use up to 1500 instances (the physical limit of the board), but this is not possible because the execution times would be too long.
 
