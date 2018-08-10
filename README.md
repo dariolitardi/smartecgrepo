@@ -16,13 +16,13 @@ Atrial fibrillation is an abnormal heart rhythm characterized by **rapid and irr
 ### Architecture
 <img src="pictures/architecture.png" width="500" />  
 
-Figure 1
+**Figure 1**
 
 ### Connections
 
 <img src="pictures/connections.jpg" width="300" />
 
-Figure 2 - **STM32 Nucleo board connected to the pulse sensor and the bluetooth module**  
+**Figure 2 - STM32 Nucleo board connected to the pulse sensor and the bluetooth module**  
 
 ## How does SmartECG work
 The STM32 Nucleo board detects heartbeats through the pulse sensor. They are pre-processed and then elaborated from a machine learning algorithm. 
@@ -53,7 +53,7 @@ The KNN algorithm can be summarized by the following steps:
 
 <img src="pictures/knn.png" width="300" />
 
-Figure 3 - **The picture illustrates how a new data point “?” is assigned to the triangle class label based on majority voting among its k nearest neighbors. In the example K = 5.**
+**Figure 3 - The picture illustrates how a new data point “?” is assigned to the triangle class label based on majority voting among its k nearest neighbors. In the example K = 5.**
 
 The dataset we used has been preprocessed according to the procedures described in the following article:
 
@@ -105,10 +105,10 @@ Below is a list of all the machine learning algorithms tested with the results o
 
 <img src="pictures/algorithms_comparison.png"/>  
 
-Figure 4 - **Chart of the comparison between the accuracies of the tested algorithms**  
+**Figure 4 - Chart of the comparison between the accuracies of the tested algorithms**  
 
 As we can see from the graph, the KNN achieves the best results.  
-The accuracy of prediction is always between 94% and 97%.
+The accuracy of prediction, tested with different testing and training set, is always between 94% and 97%.
 
 ## Code
 * [STM Nucleo-F401RE Board](./Nucleo)  
@@ -126,7 +126,7 @@ We tested the KNN algorithm's performance in two ways. First of all we compared 
 In the graph below we reported the first test: the execution times in milliseconds varying the number of the instances.  
 <img src="pictures/performance.png"/>   
 
-Figure 5 - **Comparison between the number of instances and the execution times of the classification of a new instance on STM32 board.**
+**Figure 5 - Comparison between the number of instances and the execution times of the classification of a new instance on STM32 board.**
 
 The maximum number of instances that can be handled from the classification algorithm is 2000. The algorithm with 2100 instances is very slow: after five minutes it doesn't return an output.
 
@@ -134,22 +134,38 @@ The results of the second test are displayed in the chart below: the execution t
 
 <img src="pictures/platforms_comparison.png"/>  
 
-Figure 6 - **Comparison of the execution times of the classification of a new instance between the three platforms**  
+**Figure 6 - Comparison of the execution times of the classification of a new instance between the three platforms**  
 
 From the first test we can conclude that there is a direct proportionality between the number of the instances and the execution time. When the first one increases the latter increases as well.   
 From the second test we can consider that the execution time corresponding to a high and fixed number of the instances (2000) within the STM32 board is far slower than the Android app and the Python implementation on pc. 
 
 ### Limitations
 
-We tested the possible limitations of our implementation on the STM32 board. The premise is that fibrillation is characterized by rapid and irregular beats, the application to detect heart beats must calculate at least two beats per second, because on average when you run you can reach 120 beats per minute (two beats per second, that is one beat every 500 ms). This means that the entire execution time, that is the time from when a beat is detected until when the data is sent via Bluetooth, must be less than half a second. In our test, we obtained that with 300 instances the execution time of an entire application execution is less than half a second, indeed the next value, 400 instances has an execution time greater than 500 ms. This result is shown in the following graph.
+We tested the possible limitations of our implementation on the STM32 board. The premise is that fibrillation is characterized by rapid and irregular beats, the program to detect heart beats must calculate at least two beats per second, because on average when you run you can reach 120 beats per minute (two beats per second, that is one beat every 500 ms). This means that the entire execution time, that is the time from when a beat is detected until when the data is sent via Bluetooth, must be less than half a second. In our test, we obtained that with 300 instances the execution time of an entire program execution is less than 500 ms, indeed the next value, with 400 instances, has an execution time greater than 500 ms. This result is shown in the following graph.
 
 <img src="pictures/limitations.png"/>
 
-Figure 7 - **Comparison between the number of instances and the execution times from when a beat is detected until when the data is sent via Bluetooth**  
+**Figure 7 - Comparison between the number of instances and the execution times from when a beat is detected until when the data is sent via Bluetooth**  
 
-The maximum number of instances that can be handled from the whole application is 1500. The application with 1600 instances is very slow: after five minutes it doesn't even return an output.
+The maximum number of instances that can be handled from the whole program is 1500. The program with 1600 instances is very slow: after five minutes it doesn't even return an output. The reason is explained in more detail in the next paragraphs.
 
-These results indicates that the most significant limitation is low computational performance of the STM32 board due to a low CPU frequency (84 Mhz).
+Each instance of the dataset consists of 5 floats in input and an integer as an ouput. Floats and integers have a size of 4 bytes (32 bits), so we have (5 + 1) * 4 = 24 bytes or 192 bits.
+
+The total available memory is 98304 bytes (96 kB). The IDE shows the warning: "Low memory available stability problems may occur" when, at the beginning of the program, the used memory exceeds the 75% of the total available memory, but this is a warning that the IDE shows in any case when that threshold is reached, without being aware of how much ram will be needed during the execution of the program. Indeed, in our case, the program becomes slow (we define that the program is slow when the time required to classify a new instance is too long) when, at the beginning of the program, less than 75% of ram is used. 
+
+In more detail, the classification algorithm is slow when about 2100 instances are used (and, at the startup, the memory occupied is about 50%). The whole program becomes slow when about 1600 instances are used (the memory occupied at startup is about 42%). The charts below show how the memory usage varies with the number of instances. 
+
+<img src="pictures/memory_knn.png"/>
+
+**Figure 8 - Memory usage at startup (KNN only)**
+
+<img src="pictures/memory_program.png"/>
+
+**Figure 9 - Memory usage at startup (whole program)**
+
+The reason why the program is slow with a quantity of ram used well below the threshold of 75% is given by the fact that the machine learning algorithm used, the KNN, is a memory intensive algorithm that needs a lot of data to perform the classification of new instances, data that fills the memory.
+
+We can conclude that the memory is a limitation, but not the most significant. These results, indeed, indicates that the most significant limitation is low computational performance of the STM32 board due to a low CPU frequency (84 Mhz). The low CPU frequency is the most significant limitation since it forces us to reduce the number of instances to 300, even though the STM32 board could handle a larger number of instances. In other words, if the CPU was more efficient it would be possible to use up to 1500 instances (the physical limit of the board), but this is not possible because the execution times would be too long.
 
 ### Accuracy
 
@@ -157,7 +173,7 @@ For the choice of the platform, we tested the KNN algorithm on the STM32 board, 
 
 <img src="pictures/accuracy.png"/>  
 
-Figure 8 - **Comparison between the accuracy and the number of the instances valid in every platform**  
+**Figure 10 - Comparison between the accuracy and the number of the instances valid in every platform**  
 
 We can notice that increasing the number of the instances, the accuracy increases as well. When we reduce the number of the instances, the accuracy decreases due to overfitting and the presence of outliers.
 
@@ -169,25 +185,25 @@ We have tested k-fold cross validation and plotted the result in the chart below
 
 <img src="pictures/validation.png"/>
 
-Figure 9 - **10-fold cross validation tells us that K=1 results in the lowest validation error**
+**Figure 11 - 10-fold cross validation tells us that K=1 results in the lowest validation error**
 
 ## Android application
   
 <img src="pictures/profile_activity.png" height="300" /> 
 
-Figure 10 - **User profile creation**
+**Figure 12 - User profile creation**
 
 <img src="pictures/scan_activity.png" height="300" />
 
-Figure 11 - **Connection to a bluetooth device**  
+**Figure 13 - Connection to a bluetooth device**  
 
 <img src="pictures/home_activity.png" height="300" />  
 
-Figure 12 - **The home screen shows the BPM (beats-per-minute)**  
+**Figure 14 - The home screen shows the BPM (beats-per-minute)**  
 
 <img src="pictures/notification.png" height="300" />  
 
-Figure 13 - **The notification received when the fibrillation is detected**  
+**Figure 15 - The notification received when the fibrillation is detected**  
 
 ## How to compile the code
 In order to compile the code for the Nucleo Board you have to add STM32 boards support to Arduino IDE.  
@@ -200,7 +216,7 @@ You can find the tutorial at this link: https://github.com/stm32duino/wiki/wiki/
 
 <img src="pictures/battery used.jpg" height="300" />
 
-Figure 14 - **Battery used to do the tests**
+**Figure 16 - Battery used to do the tests**
 
 
 ## Links
