@@ -153,7 +153,7 @@ Each instance of the dataset consists of 5 floats in input and an integer as an 
 
 The total available memory is 98304 bytes (96 kB). The IDE shows the warning: "Low memory available stability problems may occur" when, at the beginning of the program, the used memory exceeds the 75% of the total available memory, but this is a warning that the IDE shows in any case when that threshold is reached, without being aware of how much ram will be needed during the execution of the program. Indeed, in our case, the program becomes slow (we define that the program is slow when the time required to classify a new instance is too long) when, at the beginning of the program, less than 75% of ram is used. 
 
-In more detail, the classification algorithm is slow when about 2100 instances are used (and, at the startup, the memory occupied is about 50%). The whole program becomes slow when about 1600 instances are used (the memory occupied at startup is about 42%). The charts below show how the memory usage varies with the number of instances. 
+In more detail, the classification algorithm is slow when about 2100 instances are used: at the startup, the memory occupied is about 52%, hence 24 bytes * 2100 = 50400, infact there are 51472 bytes due to the presence to other variables in memory. The whole program becomes slow when about 1600 instances are used: the memory occupied is about 42%, hence 24 bytes * 1600 = 38400, infact there are 40888 bytes due to the presence to other variables in memory. The charts below show how the memory usage varies with the number of instances. 
 
 <img src="pictures/memory_knn.png"/>
 
